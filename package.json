@@ -30,10 +30,22 @@
   "devDependencies": {
     "@commitlint/cli": "^13.1.0",
     "@commitlint/config-conventional": "^13.1.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.0",
     "@types/jest": "27.0.1",
+    "@types/react": "^17.0.20",
     "husky": "^7.0.2",
     "libton-script": "0.12.8",
     "lint-staged": "^11.1.2",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "standard-version": "^9.3.1"
+  },
+  "peerDependencies": {
+    "@types/react": "^17.0.11",
+    "react": "^17.0.2"
+  },
+  "dependencies": {
+    "@forminator/react-wire": "^0.4.2"
   }
 }
