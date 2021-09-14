@@ -16,6 +16,7 @@
     "tsdoc-metadata.json"
   ],
   "scripts": {
+    "prepare": "husky install",
     "build": "libton-script build",
     "build:doc": "libton-script doc",
     "test": "libton-script test --coverage --verbose",
@@ -27,6 +28,8 @@
   },
   "devDependencies": {
     "@types/jest": "27.0.1",
-    "libton-script": "0.12.8"
+    "husky": "^7.0.2",
+    "libton-script": "0.12.8",
+    "lint-staged": "^11.1.2"
   }
 }
