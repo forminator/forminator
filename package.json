@@ -24,12 +24,16 @@
     "format": "libton-script format",
     "format:check": "libton-script format --check",
     "validate": "libton-script lint && libton-script format --check && libton-script test --coverage --verbose",
-    "prepublishOnly": "yarn validate && yarn build"
+    "prepublishOnly": "yarn validate && yarn build",
+    "release": "standard-version"
   },
   "devDependencies": {
+    "@commitlint/cli": "^13.1.0",
+    "@commitlint/config-conventional": "^13.1.0",
     "@types/jest": "27.0.1",
     "husky": "^7.0.2",
     "libton-script": "0.12.8",
-    "lint-staged": "^11.1.2"
+    "lint-staged": "^11.1.2",
+    "standard-version": "^9.3.1"
   }
 }
