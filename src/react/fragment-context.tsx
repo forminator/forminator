@@ -22,14 +22,16 @@ export function useFragmentContext<IValue, EValue>(): FragmentContextType<
   return context;
 }
 
-interface OwnProps<IValue, EValue> {
+interface FragmentContextProviderOwnProps<IValue, EValue> {
   value: FragmentContextType<IValue, EValue>;
 }
 
-type Props<IValue, EValue> = PropsWithChildren<OwnProps<IValue, EValue>>;
+type FragmentContextProviderProps<IValue, EValue> = PropsWithChildren<
+  FragmentContextProviderOwnProps<IValue, EValue>
+>;
 
 export function FragmentContextProvider<IValue, EValue>(
-  props: Props<IValue, EValue>,
+  props: FragmentContextProviderProps<IValue, EValue>,
 ) {
   return (
     <FragmentContext.Provider value={props.value}>

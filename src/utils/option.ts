@@ -91,3 +91,10 @@ function mapOption<V, T>(option: Option<V>, fn: (v: V) => T): Option<T> {
   }
   return some(fn(option.value));
 }
+
+export function intoOption<Value>(value: Value | undefined): Option<Value> {
+  if (value === undefined) {
+    return none();
+  }
+  return some(value);
+}
