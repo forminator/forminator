@@ -9,14 +9,14 @@ import { getExistingState$ } from './get-state-wire';
 
 type Getters = {
   getWireValue: <Value>(wire: ReadonlyWire<Value>) => Value;
-  getFragmentState: <IValue, SD extends StateDefinition<any, any, any>>(
+  getFragmentState: <IValue, SD extends StateDefinition<any, any, any, any>>(
     fragment: ForminatorFragment<IValue, any>,
   ) => Option<SD['state']>;
 };
 
 export function _getFinalState<
   IValue,
-  SD extends StateDefinition<any, any, any>
+  SD extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,
   stateComposer: StateComposer<SD>,
@@ -26,11 +26,9 @@ export function _getFinalState<
     const fragmentComposer = getWireValue(fragment.composer$).ok();
     const value = getWireValue(fragment.value$);
     const fragments = fragmentComposer.getFragments(intoOption(value).ok());
-    const state = getExistingState$(
-      fragment,
-      stateComposer,
-      getWireValue,
-    ).map((stateWire) => getWireValue(stateWire));
+    const state = getExistingState$(fragment, stateComposer, getWireValue).map(
+      (stateWire) => getWireValue(stateWire),
+    );
     const states = fragments.map((f) => getFragmentState(f).ok());
     return stateComposer.compose(state, states);
   });
@@ -38,23 +36,23 @@ export function _getFinalState<
 
 export function getFinalState<
   IValue,
-  SD extends StateDefinition<any, any, any>
+  SD extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,
   stateComposer: StateComposer<SD>,
-): Option<SD['state']> {
+): Option<SD['finalState']> {
   return _getFinalState(fragment, stateComposer, {
     getWireValue: (wire) => wire.getValue(),
     getFragmentState: (f) => getFinalState(f, stateComposer),
   });
 }
 
-function createFinalState$<IValue, SD extends StateDefinition<any, any, any>>(
-  fragment: ForminatorFragment<IValue, any>,
-  stateComposer: StateComposer<SD>,
-) {
-  return createSelector<Option<SD['state']>>({
-    get: ({ get }): Option<SD['state']> => {
+function createFinalState$<
+  IValue,
+  SD extends StateDefinition<any, any, any, any>,
+>(fragment: ForminatorFragment<IValue, any>, stateComposer: StateComposer<SD>) {
+  return createSelector<Option<SD['finalState']>>({
+    get: ({ get }): Option<SD['finalState']> => {
       return _getFinalState(fragment, stateComposer, {
         getWireValue: get,
         getFragmentState: (f) => get(getFinalState$(f, stateComposer)),
@@ -65,11 +63,11 @@ function createFinalState$<IValue, SD extends StateDefinition<any, any, any>>(
 
 export function getFinalState$<
   IValue,
-  SD extends StateDefinition<any, any, any>
+  SD extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,
   stateComposer: StateComposer<SD>,
-): ReadonlyWire<Option<SD['state']>> {
+): ReadonlyWire<Option<SD['finalState']>> {
   const key = stateComposer.getKey();
   const finalStateWires = fragment.finalStateWires$.getValue();
   const finalStateWire = finalStateWires[key];

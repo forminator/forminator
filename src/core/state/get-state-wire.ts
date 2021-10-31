@@ -7,7 +7,10 @@ import {
 } from '../state-composer/state-composer';
 import { none, Option, some } from '../../utils/option';
 
-export function getState$<IValue, SD extends StateDefinition<any, any, any>>(
+export function getState$<
+  IValue,
+  SD extends StateDefinition<any, any, any, any>,
+>(
   fragment: ForminatorFragment<IValue, any>,
   stateComposer: StateComposer<SD>,
   ...args: SD['args']
@@ -25,7 +28,7 @@ export function getState$<IValue, SD extends StateDefinition<any, any, any>>(
 const getWireValue = <Value>(wire: Wire<Value>) => wire.getValue();
 export function getExistingState$<
   IValue,
-  S extends StateDefinition<any, any, any>
+  S extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,
   stateComposer: StateComposer<S>,

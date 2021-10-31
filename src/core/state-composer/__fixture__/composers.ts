@@ -8,7 +8,7 @@ type LoadingFns = { loading: () => void; ready: () => void };
  * - false means ready
  */
 export const loadingStateComposer: StateComposer<
-  StateDefinition<boolean, LoadingFns, [boolean?]>
+  StateDefinition<boolean, boolean, LoadingFns, [boolean?]>
 > = {
   compose(state, states) {
     if (state.or(false)) {
