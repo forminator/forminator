@@ -13,6 +13,7 @@
     "packages/*"
   ],
   "devDependencies": {
+    "@changesets/cli": "^2.19.0",
     "@commitlint/cli": "^16.0.2",
     "@commitlint/config-conventional": "^16.0.0",
     "husky": "^7.0.4",
