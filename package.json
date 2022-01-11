@@ -1,0 +1,15 @@
+{
+  "name": "forminator-project",
+  "version": "0.1.0",
+  "description": "mono repo of forminator-project",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/forminator/forminator.git"
+  },
+  "author": "smmoosavi",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ]
+}
