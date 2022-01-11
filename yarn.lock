@@ -687,6 +687,13 @@
   dependencies:
     "@cspotcode/source-map-consumer" "0.8.0"
 
+"@forminator/react-wire@^0.4.2":
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/@forminator/react-wire/-/react-wire-0.4.2.tgz#476768e2c583a8b237c32fab619cda7db06289ab"
+  integrity sha512-3hDc3C0QQ75bK7g8TLGWPqi+4VCfNCNRryQLqsRNgXDaIXbCDPnL/lyr72GZh63EszPhuyDvBLYtQlZCo9nIoA==
+  dependencies:
+    mitt "^1.2.0"
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -3622,6 +3629,11 @@ minimist@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
+
+mitt@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/mitt/-/mitt-1.2.0.tgz#cb24e6569c806e31bd4e3995787fe38a04fdf90d"
+  integrity sha512-r6lj77KlwqLhIUku9UWYes7KJtsczvolZkzp8hbaDPPaE24OmWl5s539Mytlj22siEQKosZ26qCBgda2PKwoJw==
 
 mixme@^0.5.1:
   version "0.5.4"
