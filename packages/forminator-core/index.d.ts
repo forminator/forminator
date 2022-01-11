@@ -1,6 +1,10 @@
 import { ReadonlyWire } from '@forminator/react-wire';
 import { Wire } from '@forminator/react-wire';
 
+export declare function createFragment<IValue, EValue>(
+  initialValue?: IValue,
+): ForminatorFragment<IValue, EValue>;
+
 export declare function createId(prefix?: string): string;
 
 export declare interface ForminatorFragment<IValue, EValue> {
@@ -16,9 +20,42 @@ export declare function fromOption<Value>(
   option: Option_2<Value>,
 ): Value | undefined;
 
+export declare function getFinalState$<
+  IValue,
+  SD extends StateDefinition<any, any, any, any>,
+>(
+  fragment: ForminatorFragment<IValue, any>,
+  stateComposer: StateComposer<SD>,
+): ReadonlyWire<Option_2<SD['finalState']>>;
+
+export declare function getFinalState<
+  IValue,
+  SD extends StateDefinition<any, any, any, any>,
+>(
+  fragment: ForminatorFragment<IValue, any>,
+  stateComposer: StateComposer<SD>,
+): Option_2<SD['finalState']>;
+
+export declare function getFinalValue$<IValue, EValue>(
+  fragment: ForminatorFragment<IValue, EValue>,
+): ReadonlyWire<Option_2<EValue>>;
+
+export declare function getFinalValue<IValue, EValue>(
+  fragment: ForminatorFragment<IValue, EValue>,
+): Option_2<EValue>;
+
 export declare type GetFragmentValue = <IValue, EValue>(
   fragment: ForminatorFragment<IValue, EValue>,
 ) => EValue;
+
+export declare function getState$<
+  IValue,
+  SD extends StateDefinition<any, any, any, any>,
+>(
+  fragment: ForminatorFragment<IValue, any>,
+  stateComposer: StateComposer<SD>,
+  ...args: SD['args']
+): StateWire<SD>;
 
 export declare function intoOption<Value>(
   value: Value | undefined,
@@ -40,6 +77,11 @@ export declare interface OptionFns<Value> {
   isSome(this: Option_2<Value>): this is Some<Value>;
   isNone(this: Option_2<Value>): this is None<Value>;
 }
+
+export declare function setComposer<IValue, EValue>(
+  fragment: ForminatorFragment<IValue, EValue>,
+  composer: ValueComposer<IValue, EValue>,
+): void;
 
 export declare type Some<Value> = {
   some: true;
