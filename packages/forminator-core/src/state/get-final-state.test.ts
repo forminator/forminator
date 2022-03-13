@@ -1,11 +1,15 @@
+import { createWire } from '@forminator/react-wire';
 import { createFragment } from '../fragment/create-fragment';
+import { ForminatorFragment } from '../fragment/forminator-fragment';
 import { setComposer } from '../fragment/set-composer';
 import { loadingStateComposer } from '../state-composer/__fixture__/composers';
-import { none, some } from '../utils/option';
+import { none, Option, some } from '../utils/option';
 import {
   ArrayFragmentValue,
+  createTaggedValueComposer,
   getArrayValueComposer,
   getAtomicValueComposer,
+  TaggedFragmentValue,
 } from '../value-composer/__fixture__/composers';
 import {
   getFinalState,
@@ -98,6 +102,81 @@ describe('getFinalState', () => {
         some(false),
       );
     });
+
+    it('should update state only based on active fragments', () => {
+      type Key = 'A' | 'B';
+      const keyFragment$ = createWire(some(createFragment<Key, Key>('A')));
+      const item1 = createFragment<number, number>(1);
+      const item2 = createFragment<number, number>(2);
+      const fragment = createFragment<TaggedFragmentValue<Key, number>, number>(
+        {
+          A: item1,
+          B: item2,
+        },
+      );
+      setComposer(keyFragment$.getValue().ok(), getAtomicValueComposer());
+      setComposer(item1, getAtomicValueComposer());
+      setComposer(item2, getAtomicValueComposer());
+      setComposer(fragment, createTaggedValueComposer(keyFragment$));
+
+      const state$ = getState$(item1, loadingStateComposer);
+      expect(getFinalState(fragment, loadingStateComposer)).toEqual(
+        some(false),
+      );
+
+      state$.fns.loading();
+
+      expect(getFinalState(fragment, loadingStateComposer)).toEqual(some(true));
+      keyFragment$.getValue().ok().value$.setValue('B');
+
+      expect(getFinalState(fragment, loadingStateComposer)).toEqual(
+        some(false),
+      );
+    });
+    it('should update state only based on active fragments when key is none', () => {
+      type Key = 'A' | 'B';
+      const keyFragment$ = createWire(
+        none() as Option<ForminatorFragment<Key, Key>>,
+      );
+      const item1 = createFragment<number, number>(1);
+      const item2 = createFragment<number, number>(2);
+      const fragment = createFragment<TaggedFragmentValue<Key, number>, number>(
+        {
+          A: item1,
+          B: item2,
+        },
+      );
+      setComposer(item1, getAtomicValueComposer());
+      setComposer(item2, getAtomicValueComposer());
+      setComposer(fragment, createTaggedValueComposer(keyFragment$));
+
+      expect(getFinalState(fragment, loadingStateComposer)).toEqual(none());
+    });
+    it('should update state only based on active fragments when fragment is missing', () => {
+      type Key = 'A' | 'B';
+      const keyFragment$ = createWire(some(createFragment<Key, Key>('A')));
+      const item1 = createFragment<number, number>(1);
+      const fragment = createFragment<TaggedFragmentValue<Key, number>, number>(
+        {
+          A: item1,
+        },
+      );
+      setComposer(keyFragment$.getValue().ok(), getAtomicValueComposer());
+      setComposer(item1, getAtomicValueComposer());
+      setComposer(fragment, createTaggedValueComposer(keyFragment$));
+
+      const state$ = getState$(item1, loadingStateComposer);
+      expect(getFinalState(fragment, loadingStateComposer)).toEqual(
+        some(false),
+      );
+
+      state$.fns.loading();
+
+      expect(getFinalState(fragment, loadingStateComposer)).toEqual(some(true));
+      keyFragment$.getValue().ok().value$.setValue('B');
+
+      expect(getFinalState(fragment, loadingStateComposer)).toEqual(none());
+    });
   });
 });
 
@@ -182,6 +261,38 @@ describe('getFinalState$', () => {
       state$.fns.ready();
 
       expect(finalState$.getValue()).toEqual(some(false));
+    });
+    it('should update state only based on active fragments', () => {
+      type Key = 'A' | 'B';
+      const keyFragment$ = createWire(some(createFragment<Key, Key>('A')));
+      const item1 = createFragment<number, number>(1);
+      const item2 = createFragment<number, number>(2);
+      const fragment = createFragment<TaggedFragmentValue<Key, number>, number>(
+        {
+          A: item1,
+          B: item2,
+        },
+      );
+      setComposer(keyFragment$.getValue().ok(), getAtomicValueComposer());
+      setComposer(item1, getAtomicValueComposer());
+      setComposer(item2, getAtomicValueComposer());
+      setComposer(fragment, createTaggedValueComposer(keyFragment$));
+
+      const state$ = getState$(item1, loadingStateComposer);
+      expect(getFinalState$(fragment, loadingStateComposer).getValue()).toEqual(
+        some(false),
+      );
+
+      state$.fns.loading();
+
+      expect(getFinalState$(fragment, loadingStateComposer).getValue()).toEqual(
+        some(true),
+      );
+      keyFragment$.getValue().ok().value$.setValue('B');
+
+      expect(getFinalState$(fragment, loadingStateComposer).getValue()).toEqual(
+        some(false),
+      );
     });
   });
   it('should cache final value wire', () => {

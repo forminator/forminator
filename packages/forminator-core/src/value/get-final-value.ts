@@ -20,6 +20,7 @@ export function _getFinalValue<IValue, EValue>(
 
     return composer.compose(intoOption(value).ok(), {
       get: (f) => getFragmentValue(f).ok(),
+      getWireValue,
     });
   });
 }

@@ -44,10 +44,6 @@ export declare function getFinalValue<IValue, EValue>(
   fragment: ForminatorFragment<IValue, EValue>,
 ): Option_2<EValue>;
 
-export declare type GetFragmentValue = <IValue, EValue>(
-  fragment: ForminatorFragment<IValue, EValue>,
-) => EValue;
-
 export declare function getState$<
   IValue,
   SD extends StateDefinition<any, any, any, any>,
@@ -56,6 +52,11 @@ export declare function getState$<
   stateComposer: StateComposer<SD>,
   ...args: SD['args']
 ): StateWire<SD>;
+
+export declare type Getters = {
+  getWireValue: <Value>(wire: ReadonlyWire<Value>) => Value;
+  get: <IValue, EValue>(fragment: ForminatorFragment<IValue, EValue>) => EValue;
+};
 
 export declare function intoOption<Value>(
   value: Value | undefined,
@@ -119,13 +120,11 @@ export declare type StateWire<SD extends StateDefinition<any, any, any, any>> =
   ReadonlyWire<SD['state'], SD['fns']>;
 
 export declare interface ValueComposer<IValue, EValue> {
-  compose(
+  compose(value: IValue, options: Getters): EValue;
+  getFragments(
     value: IValue,
-    options: {
-      get: GetFragmentValue;
-    },
-  ): EValue;
-  getFragments(value: IValue): ForminatorFragment<unknown, any>[];
+    options: Getters,
+  ): ForminatorFragment<unknown, any>[];
 }
 
 export declare function waitForFinalState<
