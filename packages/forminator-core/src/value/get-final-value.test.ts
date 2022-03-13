@@ -6,7 +6,11 @@ import {
   getArrayValueComposer,
   getAtomicValueComposer,
 } from '../value-composer/__fixture__/composers';
-import { getFinalValue, getFinalValue$ } from './get-final-value';
+import {
+  getFinalValue,
+  getFinalValue$,
+  waitForFinalValue,
+} from './get-final-value';
 
 describe('getFinalValue', () => {
   it('should return none if composer not defined', () => {
@@ -120,5 +124,14 @@ describe('getFinalValue$', () => {
     const finalValue$1 = getFinalValue$(fragment);
     const finalValue$2 = getFinalValue$(fragment);
     expect(finalValue$1).toEqual(finalValue$2);
+  });
+});
+
+describe('waitForFinalValue', () => {
+  it('should resolves to final value', async () => {
+    const fragment = createFragment<number, number>(0);
+    setComposer<number, number>(fragment, getAtomicValueComposer());
+
+    await expect(waitForFinalValue(fragment)).resolves.toEqual(0);
   });
 });

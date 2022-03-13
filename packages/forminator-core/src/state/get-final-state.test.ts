@@ -7,7 +7,11 @@ import {
   getArrayValueComposer,
   getAtomicValueComposer,
 } from '../value-composer/__fixture__/composers';
-import { getFinalState, getFinalState$ } from './get-final-state';
+import {
+  getFinalState,
+  getFinalState$,
+  waitForFinalState,
+} from './get-final-state';
 import { getState$ } from './get-state-wire';
 
 describe('getFinalState', () => {
@@ -193,5 +197,15 @@ describe('getState$', () => {
     const finalState$1 = getState$(fragment, loadingStateComposer);
     const finalState$2 = getState$(fragment, loadingStateComposer);
     expect(finalState$1).toEqual(finalState$2);
+  });
+});
+
+describe('waitForFinalState', () => {
+  it('should resolves to final state', async () => {
+    const fragment = createFragment<number, number>(0);
+    setComposer(fragment, getAtomicValueComposer());
+    await expect(
+      waitForFinalState(fragment, loadingStateComposer),
+    ).resolves.toEqual(false);
   });
 });

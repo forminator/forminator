@@ -128,4 +128,20 @@ export declare interface ValueComposer<IValue, EValue> {
   getFragments(value: IValue): ForminatorFragment<unknown, any>[];
 }
 
+export declare function waitForFinalState<
+  IValue,
+  SD extends StateDefinition<any, any, any, any>,
+>(
+  fragment: ForminatorFragment<IValue, any>,
+  stateComposer: StateComposer<SD>,
+): Promise<SD['finalState']>;
+
+export declare function waitForFinalValue<IValue, EValue>(
+  fragment: ForminatorFragment<IValue, EValue>,
+): Promise<EValue>;
+
+export declare function waitForSomeValue<T>(
+  wire: ReadonlyWire<Option_2<T>>,
+): Promise<T>;
+
 export {};
