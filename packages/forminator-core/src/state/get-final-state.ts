@@ -5,6 +5,7 @@ import {
   StateDefinition,
 } from '../state-composer/state-composer';
 import { catchNoneError, intoOption, Option } from '../utils/option';
+import { waitForSomeValue } from '../utils/option-wire';
 import { getExistingState$ } from './get-state-wire';
 
 type Getters = {
@@ -82,4 +83,14 @@ export function getFinalState$<
     [key]: finalState$,
   });
   return finalState$;
+}
+
+export function waitForFinalState<
+  IValue,
+  SD extends StateDefinition<any, any, any, any>,
+>(
+  fragment: ForminatorFragment<IValue, any>,
+  stateComposer: StateComposer<SD>,
+): Promise<SD['finalState']> {
+  return waitForSomeValue(getFinalState$(fragment, stateComposer));
 }

@@ -1,6 +1,7 @@
 import { createSelector, ReadonlyWire } from '@forminator/react-wire';
 import { ForminatorFragment } from '../fragment/forminator-fragment';
 import { catchNoneError, intoOption, Option, some } from '../utils/option';
+import { waitForSomeValue } from '../utils/option-wire';
 
 type Getters = {
   getWireValue: <Value>(wire: ReadonlyWire<Value>) => Value;
@@ -55,4 +56,10 @@ export function getFinalValue$<IValue, EValue>(
   const finalValue$ = createFinalValue$(fragment);
   fragment.finalValue$$.setValue(some(finalValue$));
   return finalValue$;
+}
+
+export function waitForFinalValue<IValue, EValue>(
+  fragment: ForminatorFragment<IValue, EValue>,
+): Promise<EValue> {
+  return waitForSomeValue(getFinalValue$(fragment));
 }
