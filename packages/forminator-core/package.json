@@ -39,7 +39,7 @@
     "@types/node": "^16",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
-    "@vitejs/plugin-react": "^1.0.0",
+    "@vitejs/plugin-react": "^1.2.0",
     "jest": "^27",
     "lint-staged": "^12",
     "prettier": "^2",
@@ -47,8 +47,8 @@
     "react-dom": "^17",
     "ts-jest": "^27",
     "typescript": "^4",
-    "vite": "^2",
-    "vite-plugin-dts": "^0.9"
+    "vite": "^2.8.6",
+    "vite-plugin-dts": "^0.9.10"
   },
   "peerDependencies": {
     "react": "^17",
