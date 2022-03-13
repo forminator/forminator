@@ -35,7 +35,7 @@ describe('option', () => {
     it('should return the returned value', () => {
       expect(doubleX(some({ x: 5 }))).toEqual(some(10));
     });
-    it('should return the returned value', () => {
+    it('should return none when NoneError throw', () => {
       expect(doubleX(none())).toEqual(none());
     });
     it('should re-throw other errors', () => {
