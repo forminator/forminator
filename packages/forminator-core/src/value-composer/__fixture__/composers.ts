@@ -50,8 +50,8 @@ export function createTaggedValueComposer<Key extends string, Value>(
   fragment$: ReadonlyWire<Option<ForminatorFragment<Key, Key>>>,
 ): ValueComposer<TaggedFragmentValue<Key, Value>, Value> {
   return {
-    compose(value, { get, getWireValue }) {
-      const key = get(getWireValue(fragment$).ok());
+    compose(value, { get }) {
+      const key = get(get(fragment$).ok());
       const fragment = value[key];
       if (!fragment) {
         throw new NoneError();
@@ -59,7 +59,7 @@ export function createTaggedValueComposer<Key extends string, Value>(
       return get(fragment);
     },
     getFragments(value, { get }) {
-      const key = get(fragment$.getValue().ok());
+      const key = get(get(fragment$).ok());
       const fragment = value[key];
       if (!fragment) {
         throw new NoneError();

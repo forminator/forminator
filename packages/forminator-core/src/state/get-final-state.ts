@@ -1,5 +1,8 @@
 import { createSelector, ReadonlyWire } from '@forminator/react-wire';
-import { ForminatorFragment } from '../fragment/forminator-fragment';
+import {
+  ForminatorFragment,
+  isForminatorFragment,
+} from '../fragment/forminator-fragment';
 import {
   StateComposer,
   StateDefinition,
@@ -31,8 +34,13 @@ export function _getFinalState<
     const fragmentComposer = getWireValue(fragment.composer$).ok();
     const value = getWireValue(fragment.value$);
     const fragments = fragmentComposer.getFragments(intoOption(value).ok(), {
-      get: (f) => getFragmentValue(f).ok(),
-      getWireValue,
+      get: <IValue, Value>(
+        v: ForminatorFragment<IValue, Value> | ReadonlyWire<Value>,
+      ): Value => {
+        return isForminatorFragment<IValue, Value>(v)
+          ? getFragmentValue(v).ok()
+          : getWireValue(v as ReadonlyWire<Value>);
+      },
     });
     const state = getExistingState$(fragment, stateComposer, getWireValue).map(
       (stateWire) => getWireValue(stateWire),

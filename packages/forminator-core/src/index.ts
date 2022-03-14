@@ -4,7 +4,7 @@ export { isForminatorFragment } from './fragment/forminator-fragment';
 export { createFragment } from './fragment/create-fragment';
 
 /* value */
-export type { ValueComposer, Getters } from './value-composer/value-composer';
+export type { ValueComposer, GetValue } from './value-composer/value-composer';
 
 export { setComposer } from './fragment/set-composer';
 export {

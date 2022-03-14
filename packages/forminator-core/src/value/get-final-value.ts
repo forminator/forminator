@@ -1,5 +1,8 @@
 import { createSelector, ReadonlyWire } from '@forminator/react-wire';
-import { ForminatorFragment } from '../fragment/forminator-fragment';
+import {
+  ForminatorFragment,
+  isForminatorFragment,
+} from '../fragment/forminator-fragment';
 import { catchNoneError, intoOption, Option, some } from '../utils/option';
 import { waitForSomeValue } from '../utils/option-wire';
 
@@ -19,8 +22,13 @@ export function _getFinalValue<IValue, EValue>(
     const value = getWireValue(fragment.value$);
 
     return composer.compose(intoOption(value).ok(), {
-      get: (f) => getFragmentValue(f).ok(),
-      getWireValue,
+      get: <IValue, Value>(
+        v: ForminatorFragment<IValue, Value> | ReadonlyWire<Value>,
+      ): Value => {
+        return isForminatorFragment<IValue, Value>(v)
+          ? getFragmentValue(v).ok()
+          : getWireValue(v as ReadonlyWire<Value>);
+      },
     });
   });
 }

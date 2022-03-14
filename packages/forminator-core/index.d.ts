@@ -56,10 +56,9 @@ export declare function getState$<
   ...args: SD['args']
 ): StateWire<SD>;
 
-export declare type Getters = {
-  getWireValue: <Value>(wire: ReadonlyWire<Value>) => Value;
-  get: <IValue, EValue>(fragment: ForminatorFragment<IValue, EValue>) => EValue;
-};
+export declare type GetValue = <Value>(
+  v: ForminatorFragment<any, Value> | ReadonlyWire<Value>,
+) => Value;
 
 export declare function intoOption<Value>(
   value: Value | undefined,
@@ -127,10 +126,17 @@ export declare type StateWire<SD extends StateDefinition<any, any, any, any>> =
   ReadonlyWire<SD['state'], SD['fns']>;
 
 export declare interface ValueComposer<IValue, EValue> {
-  compose(value: IValue, options: Getters): EValue;
+  compose(
+    value: IValue,
+    options: {
+      get: GetValue;
+    },
+  ): EValue;
   getFragments(
     value: IValue,
-    options: Getters,
+    options: {
+      get: GetValue;
+    },
   ): ForminatorFragment<unknown, any>[];
 }
 
