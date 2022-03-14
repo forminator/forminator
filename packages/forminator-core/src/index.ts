@@ -1,5 +1,6 @@
 /* fragment */
 export type { ForminatorFragment } from './fragment/forminator-fragment';
+export { isForminatorFragment } from './fragment/forminator-fragment';
 export { createFragment } from './fragment/create-fragment';
 
 /* value */

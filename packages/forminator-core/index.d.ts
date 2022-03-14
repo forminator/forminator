@@ -7,7 +7,10 @@ export declare function createFragment<IValue, EValue>(
 
 export declare function createId(prefix?: string): string;
 
+declare const FORMINATOR_FRAGMENT: unique symbol;
+
 export declare interface ForminatorFragment<IValue, EValue> {
+  readonly [FORMINATOR_FRAGMENT]: true;
   readonly id: string;
   composer$: Wire<Option_2<ValueComposer<IValue, EValue>>>;
   value$: Wire<IValue | undefined>;
@@ -61,6 +64,10 @@ export declare type Getters = {
 export declare function intoOption<Value>(
   value: Value | undefined,
 ): Option_2<Value>;
+
+export declare function isForminatorFragment<IValue, EValue>(
+  value: any,
+): value is ForminatorFragment<IValue, EValue>;
 
 export declare type None<Value> = {
   some: false;
