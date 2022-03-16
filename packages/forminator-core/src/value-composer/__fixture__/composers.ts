@@ -1,6 +1,6 @@
 import { ReadonlyWire } from '@forminator/react-wire';
 import { ForminatorFragment } from '../../fragment/forminator-fragment';
-import { NoneError, Option } from '../../utils/option';
+import { Option, throwNoneError } from '../../utils/option';
 import { ValueComposer } from '../value-composer';
 
 export function createAtomicValueComposer<Value>(): ValueComposer<
@@ -54,7 +54,7 @@ export function createTaggedValueComposer<Key extends string, Value>(
       const key = get(get(fragment$).ok());
       const fragment = value[key];
       if (!fragment) {
-        throw new NoneError();
+        throwNoneError();
       }
       return get(fragment);
     },
@@ -62,7 +62,7 @@ export function createTaggedValueComposer<Key extends string, Value>(
       const key = get(get(fragment$).ok());
       const fragment = value[key];
       if (!fragment) {
-        throw new NoneError();
+        throwNoneError();
       }
       return [fragment];
     },
