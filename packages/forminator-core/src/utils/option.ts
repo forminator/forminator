@@ -67,7 +67,7 @@ function ok<Value>(option: Option<Value>): Value {
   if (isSome(option)) {
     return option.value;
   }
-  throw new NoneError();
+  throwNoneError();
 }
 
 function or<Value>(option: Option<Value>, value: Value): Value {
@@ -79,6 +79,10 @@ function or<Value>(option: Option<Value>, value: Value): Value {
 
 function isNoneError(e: any): e is NoneError {
   return e instanceof NoneError;
+}
+
+export function throwNoneError(): never {
+  throw new NoneError();
 }
 
 export function catchNoneError<R>(fn: () => R): Option<R> {

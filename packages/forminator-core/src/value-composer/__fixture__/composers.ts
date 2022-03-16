@@ -1,4 +1,6 @@
+import { ReadonlyWire } from '@forminator/react-wire';
 import { ForminatorFragment } from '../../fragment/forminator-fragment';
+import { Option, throwNoneError } from '../../utils/option';
 import { ValueComposer } from '../value-composer';
 
 export function createAtomicValueComposer<Value>(): ValueComposer<
@@ -39,4 +41,30 @@ export function getArrayValueComposer<Item>(): ValueComposer<
   Item[]
 > {
   return arrayComposer;
+}
+
+export type TaggedFragmentValue<Key extends string, Value> = Partial<
+  Record<Key, ForminatorFragment<any, Value>>
+>;
+export function createTaggedValueComposer<Key extends string, Value>(
+  fragment$: ReadonlyWire<Option<ForminatorFragment<Key, Key>>>,
+): ValueComposer<TaggedFragmentValue<Key, Value>, Value> {
+  return {
+    compose(value, { get }) {
+      const key = get(get(fragment$).ok());
+      const fragment = value[key];
+      if (!fragment) {
+        throwNoneError();
+      }
+      return get(fragment);
+    },
+    getFragments(value, { get }) {
+      const key = get(get(fragment$).ok());
+      const fragment = value[key];
+      if (!fragment) {
+        throwNoneError();
+      }
+      return [fragment];
+    },
+  };
 }

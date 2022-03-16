@@ -1,15 +1,22 @@
 import { createSelector, ReadonlyWire } from '@forminator/react-wire';
-import { ForminatorFragment } from '../fragment/forminator-fragment';
+import {
+  ForminatorFragment,
+  isForminatorFragment,
+} from '../fragment/forminator-fragment';
 import {
   StateComposer,
   StateDefinition,
 } from '../state-composer/state-composer';
 import { catchNoneError, intoOption, Option } from '../utils/option';
 import { waitForSomeValue } from '../utils/option-wire';
+import { getFinalValue, getFinalValue$ } from '../value/get-final-value';
 import { getExistingState$ } from './get-state-wire';
 
 type Getters = {
   getWireValue: <Value>(wire: ReadonlyWire<Value>) => Value;
+  getFragmentValue: <IValue, EValue>(
+    fragment: ForminatorFragment<IValue, EValue>,
+  ) => Option<EValue>;
   getFragmentState: <IValue, SD extends StateDefinition<any, any, any, any>>(
     fragment: ForminatorFragment<IValue, any>,
   ) => Option<SD['state']>;
@@ -21,12 +28,20 @@ export function _getFinalState<
 >(
   fragment: ForminatorFragment<IValue, any>,
   stateComposer: StateComposer<SD>,
-  { getWireValue, getFragmentState }: Getters,
+  { getWireValue, getFragmentValue, getFragmentState }: Getters,
 ): Option<SD['state']> {
   return catchNoneError(() => {
     const fragmentComposer = getWireValue(fragment.composer$).ok();
     const value = getWireValue(fragment.value$);
-    const fragments = fragmentComposer.getFragments(intoOption(value).ok());
+    const fragments = fragmentComposer.getFragments(intoOption(value).ok(), {
+      get: <IValue, Value>(
+        v: ForminatorFragment<IValue, Value> | ReadonlyWire<Value>,
+      ): Value => {
+        return isForminatorFragment<IValue, Value>(v)
+          ? getFragmentValue(v).ok()
+          : getWireValue(v as ReadonlyWire<Value>);
+      },
+    });
     const state = getExistingState$(fragment, stateComposer, getWireValue).map(
       (stateWire) => getWireValue(stateWire),
     );
@@ -44,6 +59,7 @@ export function getFinalState<
 ): Option<SD['finalState']> {
   return _getFinalState(fragment, stateComposer, {
     getWireValue: (wire) => wire.getValue(),
+    getFragmentValue: getFinalValue,
     getFragmentState: (f) => getFinalState(f, stateComposer),
   });
 }
@@ -56,6 +72,7 @@ function createFinalState$<
     get: ({ get }): Option<SD['finalState']> => {
       return _getFinalState(fragment, stateComposer, {
         getWireValue: get,
+        getFragmentValue: (f) => get(getFinalValue$(f)),
         getFragmentState: (f) => get(getFinalState$(f, stateComposer)),
       });
     },

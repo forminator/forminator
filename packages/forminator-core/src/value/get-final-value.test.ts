@@ -1,10 +1,13 @@
+import { createWire } from '@forminator/react-wire';
 import { createFragment } from '../fragment/create-fragment';
 import { setComposer } from '../fragment/set-composer';
 import { none, some } from '../utils/option';
 import {
   ArrayFragmentValue,
+  createTaggedValueComposer,
   getArrayValueComposer,
   getAtomicValueComposer,
+  TaggedFragmentValue,
 } from '../value-composer/__fixture__/composers';
 import {
   getFinalValue,
@@ -118,6 +121,53 @@ describe('getFinalValue$', () => {
 
     fragment.value$.setValue([item1, item2]);
     expect(fn).toBeCalledWith(some([1, 2]));
+  });
+  it('should update value only based on active fragments', () => {
+    type Key = 'A' | 'B';
+    const keyFragment$ = createWire(some(createFragment<Key, Key>('A')));
+    const item1 = createFragment<number, number>(1);
+    const item2 = createFragment<number, number>(2);
+    const fragment = createFragment<TaggedFragmentValue<Key, number>, number>({
+      A: item1,
+      B: item2,
+    });
+    const finalValue$ = getFinalValue$(fragment);
+
+    setComposer(keyFragment$.getValue().ok(), getAtomicValueComposer());
+    setComposer(item1, getAtomicValueComposer());
+    setComposer(item2, getAtomicValueComposer());
+    setComposer(fragment, createTaggedValueComposer(keyFragment$));
+
+    expect(finalValue$.getValue()).toEqual(some(1));
+
+    const fn = jest.fn();
+    finalValue$.subscribe(fn);
+
+    keyFragment$.getValue().ok().value$.setValue('B');
+    expect(finalValue$.getValue()).toEqual(some(2));
+    expect(fn).toBeCalledWith(some(2));
+  });
+  it('should update value to none when active fragment is missing', () => {
+    type Key = 'A' | 'B';
+    const keyFragment$ = createWire(some(createFragment<Key, Key>('A')));
+    const item1 = createFragment<number, number>(1);
+    const fragment = createFragment<TaggedFragmentValue<Key, number>, number>({
+      A: item1,
+    });
+    const finalValue$ = getFinalValue$(fragment);
+
+    setComposer(keyFragment$.getValue().ok(), getAtomicValueComposer());
+    setComposer(item1, getAtomicValueComposer());
+    setComposer(fragment, createTaggedValueComposer(keyFragment$));
+
+    expect(finalValue$.getValue()).toEqual(some(1));
+
+    const fn = jest.fn();
+    finalValue$.subscribe(fn);
+
+    keyFragment$.getValue().ok().value$.setValue('B');
+    expect(finalValue$.getValue()).toEqual(none());
+    expect(fn).toBeCalledWith(none());
   });
   it('should cache final value wire', () => {
     const fragment = createFragment(0);
