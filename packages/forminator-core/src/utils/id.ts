@@ -1,5 +1,6 @@
-import { nanoid } from 'nanoid';
+let lastId = 0;
 
-export function createId(prefix: string = '') {
-  return prefix + nanoid();
+export function createId(prefix: string = ''): string {
+  const id = lastId++;
+  return `${prefix}${id}`;
 }
