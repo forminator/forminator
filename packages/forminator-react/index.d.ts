@@ -1,6 +1,7 @@
 import { ForminatorFragment } from '@forminator/core';
 import { Option as Option_2 } from '@forminator/core';
 import { ReactNode } from 'react';
+import { ValueComposer } from '@forminator/core';
 
 export declare function Forminator<IValue, EValue>(
   props: ForminatorProps<IValue, EValue>,
@@ -11,6 +12,10 @@ export declare interface ForminatorProps<IValue, EValue> {
   rootFragment?: ForminatorFragment<IValue, EValue>;
   children?: ReactNode | undefined;
 }
+
+export declare function useComposer<IValue, EValue>(
+  composer: ValueComposer<IValue, EValue>,
+): void;
 
 export declare function useExternalValue<Value>(): Option_2<Value>;
 

@@ -1,4 +1,10 @@
-import { Forminator, useFragment, useRootFragment, useExternalValue } from '.';
+import {
+  Forminator,
+  useComposer,
+  useExternalValue,
+  useFragment,
+  useRootFragment,
+} from '.';
 
 describe('index', function () {
   it('should exports', function () {
@@ -6,5 +12,6 @@ describe('index', function () {
     expect(useFragment).toBeDefined();
     expect(useRootFragment).toBeDefined();
     expect(useExternalValue).toBeDefined();
+    expect(useComposer).toBeDefined();
   });
 });
