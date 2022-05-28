@@ -1,0 +1,21 @@
+name: Node.js CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16.x"
+      - run: yarn
+      - run: yarn workspaces run lint
+      - run: yarn workspaces run format:check
+      - run: yarn workspaces run test --coverage --verbose
+      - run: yarn workspaces run build
+      - run: git diff --exit-code --name-only
+      - uses: codecov/codecov-action@v1
