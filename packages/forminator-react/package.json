@@ -32,6 +32,7 @@
     "prepublishOnly": "yarn build"
   },
   "devDependencies": {
+    "@forminator/test-render-hook": "*",
     "@microsoft/api-extractor": "^7",
     "@testing-library/dom": "^8",
     "@testing-library/jest-dom": "^5",
