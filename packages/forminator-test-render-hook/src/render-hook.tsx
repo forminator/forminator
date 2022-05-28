@@ -1,17 +1,22 @@
 // source: https://github.com/testing-library/react-testing-library/blob/887d95b84ddbcedb46932bf52fbda4518abb35c8/src/pure.js#L118
-import { act, render } from '@testing-library/react';
+import { act, render as baseRender } from '@testing-library/react';
 import React, {
   ComponentType,
-  createRef,
   Fragment,
-  MutableRefObject,
   StrictMode,
+  useContext,
   useEffect,
 } from 'react';
+import { ErrorBoundary, ErrorContext, ResetContext } from './error-boundary';
+
+export interface ResultRef<Result> {
+  current?: Result;
+  error?: Error;
+}
 
 export interface RenderHookResult<Result, Props> {
   rerender: (props: Props) => void;
-  result: { current: Result };
+  result: ResultRef<Result>;
   unmount: () => void;
 }
 
@@ -23,7 +28,7 @@ export interface RenderHookOptions<Props> {
 
 export interface RenderHookResultWithoutProps<Result> {
   rerender: () => void;
-  result: { current: Result };
+  result: ResultRef<Result>;
   unmount: () => void;
 }
 
@@ -44,10 +49,9 @@ export function renderHook<Result, Props>(
   renderCallback: (props?: Props) => Result,
   options: Partial<RenderHookOptions<Props>> = {},
 ): RenderHookResult<Result, Props> | RenderHookResultWithoutProps<Result> {
-  const { initialProps, wrapper, strict = true } = options;
-  const Wrapper = strict ? StrictMode : Fragment;
-  const result: MutableRefObject<Result> =
-    createRef() as MutableRefObject<Result>;
+  const { initialProps, wrapper: Wrapper = Fragment, strict = true } = options;
+  const Strict = strict ? StrictMode : Fragment;
+  const result: ResultRef<Result> = { current: undefined, error: undefined };
 
   function TestComponent({
     renderCallbackProps,
@@ -58,26 +62,48 @@ export function renderHook<Result, Props>(
 
     useEffect(() => {
       result.current = pendingResult;
+      result.error = undefined;
     });
 
     return null;
   }
 
-  const { rerender: baseRerender, unmount } = render(
-    <Wrapper>
-      <TestComponent renderCallbackProps={initialProps} />
-    </Wrapper>,
-    { wrapper },
-  );
+  let resetErrorBoundary = () => {};
+
+  function ErrorFallback() {
+    const reset = useContext(ResetContext);
+    const error = useContext(ErrorContext);
+    useEffect(() => {
+      resetErrorBoundary = () => {
+        resetErrorBoundary = () => {};
+        reset?.();
+      };
+      result.current = undefined;
+      result.error = error;
+    }, [error, reset]);
+    return null;
+  }
+
+  const render = (props?: Props) => {
+    resetErrorBoundary();
+    return (
+      <Strict>
+        <ErrorBoundary fallback={<ErrorFallback />}>
+          <Wrapper>
+            <TestComponent renderCallbackProps={props} />
+          </Wrapper>
+        </ErrorBoundary>
+      </Strict>
+    );
+  };
+
+  const { rerender: baseRerender, unmount } = baseRender(render(initialProps));
 
   function rerender(rerenderCallbackProps?: Props) {
-    return baseRerender(
-      <Wrapper>
-        <TestComponent renderCallbackProps={rerenderCallbackProps} />
-      </Wrapper>,
-    );
+    return baseRerender(render(rerenderCallbackProps));
   }
 
   return { result, rerender, unmount };
 }
+
 export { act };
