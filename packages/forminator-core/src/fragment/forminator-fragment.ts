@@ -1,6 +1,6 @@
 import { ReadonlyWire, Wire } from '@forminator/react-wire';
 import { StateWire } from '../state-composer/state-composer';
-import { Option } from '../utils/option';
+import { Option } from '@forminator/option';
 import { ValueComposer } from '../value-composer/value-composer';
 
 export const FORMINATOR_FRAGMENT = Symbol('FORMINATOR_FRAGMENT');

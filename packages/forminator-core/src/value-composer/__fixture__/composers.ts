@@ -1,6 +1,6 @@
 import { ReadonlyWire } from '@forminator/react-wire';
 import { ForminatorFragment } from '../../fragment/forminator-fragment';
-import { Option, throwNoneError } from '../../utils/option';
+import { Option, throwNoneError } from '@forminator/option';
 import { ValueComposer } from '../value-composer';
 
 export function createAtomicValueComposer<Value>(): ValueComposer<

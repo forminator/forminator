@@ -3,7 +3,7 @@ import {
   ForminatorFragment,
   isForminatorFragment,
 } from '../fragment/forminator-fragment';
-import { catchNoneError, intoOption, Option, some } from '../utils/option';
+import { catchNoneError, intoOption, Option, some } from '@forminator/option';
 import { waitForSomeValue } from '../utils/option-wire';
 
 type Getters = {

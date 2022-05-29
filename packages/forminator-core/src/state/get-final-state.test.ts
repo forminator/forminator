@@ -3,7 +3,7 @@ import { createFragment } from '../fragment/create-fragment';
 import { ForminatorFragment } from '../fragment/forminator-fragment';
 import { setComposer } from '../fragment/set-composer';
 import { loadingStateComposer } from '../state-composer/__fixture__/composers';
-import { none, Option, some } from '../utils/option';
+import { none, Option, some } from '@forminator/option';
 import {
   ArrayFragmentValue,
   createTaggedValueComposer,

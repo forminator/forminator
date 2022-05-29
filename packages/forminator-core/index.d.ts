@@ -1,4 +1,12 @@
+import { fromOption } from '@forminator/option';
+import { intoOption } from '@forminator/option';
+import { None } from '@forminator/option';
+import { none } from '@forminator/option';
+import { Option as Option_2 } from '@forminator/option';
+import { OptionFns } from '@forminator/option';
 import { ReadonlyWire } from '@forminator/react-wire';
+import { Some } from '@forminator/option';
+import { some } from '@forminator/option';
 import { Wire } from '@forminator/react-wire';
 
 export declare function createFragment<IValue, EValue>(
@@ -19,9 +27,7 @@ export declare interface ForminatorFragment<IValue, EValue> {
   finalStateWires$: Wire<Partial<Record<string, ReadonlyWire<any, any>>>>;
 }
 
-export declare function fromOption<Value>(
-  option: Option_2<Value>,
-): Value | undefined;
+export { fromOption };
 
 export declare function getFinalState$<
   IValue,
@@ -60,44 +66,28 @@ export declare type GetValue = <Value>(
   v: ForminatorFragment<any, Value> | ReadonlyWire<Value>,
 ) => Value;
 
-export declare function intoOption<Value>(
-  value: Value | undefined,
-): Option_2<Value>;
+export { intoOption };
 
 export declare function isForminatorFragment<IValue, EValue>(
   value: any,
 ): value is ForminatorFragment<IValue, EValue>;
 
-export declare type None<Value> = {
-  some: false;
-} & OptionFns<Value>;
+export { None };
 
-export declare function none<Value>(): None<Value>;
+export { none };
 
-declare type Option_2<Value> = Some<Value> | None<Value>;
 export { Option_2 as Option };
 
-export declare interface OptionFns<Value> {
-  ok(this: Option_2<Value>): Value;
-  or(this: Option_2<Value>, value: Value): Value;
-  map<T>(this: Option_2<Value>, fn: (value: Value) => T): Option_2<T>;
-  isSome(this: Option_2<Value>): this is Some<Value>;
-  isNone(this: Option_2<Value>): this is None<Value>;
-}
+export { OptionFns };
 
 export declare function setComposer<IValue, EValue>(
   fragment: ForminatorFragment<IValue, EValue>,
   composer: ValueComposer<IValue, EValue>,
 ): void;
 
-export declare type Some<Value> = {
-  some: true;
-  value: Value;
-} & OptionFns<Value>;
+export { Some };
 
-export declare function some<Value>(
-  value: Value,
-): Some<Value> & OptionFns<Value>;
+export { some };
 
 export declare interface StateComposer<
   SD extends StateDefinition<any, any, any, any>,

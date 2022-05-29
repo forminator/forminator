@@ -1,4 +1,4 @@
-import { some } from '../utils/option';
+import { some } from '@forminator/option';
 import { ValueComposer } from '../value-composer/value-composer';
 import { ForminatorFragment } from './forminator-fragment';
 
