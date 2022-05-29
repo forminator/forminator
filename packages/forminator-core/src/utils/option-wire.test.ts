@@ -1,5 +1,5 @@
 import { createWire } from '@forminator/react-wire';
-import { none, Option, some } from './option';
+import { none, Option, some } from '@forminator/option';
 import { waitForSomeValue } from './option-wire';
 
 describe('waitForSomeValue', () => {

@@ -1,7 +1,7 @@
 import { createWire } from '@forminator/react-wire';
 import { createFragment } from '../fragment/create-fragment';
 import { setComposer } from '../fragment/set-composer';
-import { none, some } from '../utils/option';
+import { none, some } from '@forminator/option';
 import {
   ArrayFragmentValue,
   createTaggedValueComposer,

@@ -1,5 +1,5 @@
 import { ReadonlyWire } from '@forminator/react-wire';
-import { Option } from '../utils/option';
+import { Option } from '@forminator/option';
 
 export interface StateDefinition<FinalState, State, Fns, Args extends any[]> {
   finalState: FinalState;

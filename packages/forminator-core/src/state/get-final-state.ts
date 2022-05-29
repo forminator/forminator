@@ -7,7 +7,7 @@ import {
   StateComposer,
   StateDefinition,
 } from '../state-composer/state-composer';
-import { catchNoneError, intoOption, Option } from '../utils/option';
+import { catchNoneError, intoOption, Option } from '@forminator/option';
 import { waitForSomeValue } from '../utils/option-wire';
 import { getFinalValue, getFinalValue$ } from '../value/get-final-value';
 import { getExistingState$ } from './get-state-wire';

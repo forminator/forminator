@@ -5,7 +5,7 @@ import {
   StateDefinition,
   StateWire,
 } from '../state-composer/state-composer';
-import { none, Option, some } from '../utils/option';
+import { none, Option, some } from '@forminator/option';
 
 export function getState$<
   IValue,

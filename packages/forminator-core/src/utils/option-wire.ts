@@ -1,5 +1,5 @@
 import { ReadonlyWire } from '@forminator/react-wire';
-import { Option } from './option';
+import { Option } from '@forminator/option';
 
 export function waitForSomeValue<T>(wire: ReadonlyWire<Option<T>>): Promise<T> {
   return new Promise((resolve, reject) => {

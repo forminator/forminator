@@ -1,6 +1,6 @@
 import { createWire, ReadonlyWire } from '@forminator/react-wire';
 import { createId } from '../utils/id';
-import { none, Option } from '../utils/option';
+import { none, Option } from '@forminator/option';
 import { ValueComposer } from '../value-composer/value-composer';
 import { FORMINATOR_FRAGMENT, ForminatorFragment } from './forminator-fragment';
 
