@@ -15,6 +15,7 @@ import {
   none,
   intoOption,
   fromOption,
+  isOption,
 } from '.';
 
 describe('index', function () {
@@ -33,6 +34,7 @@ describe('index', function () {
     expect(waitForSomeValue).toBeDefined();
     expect(some).toBeDefined();
     expect(none).toBeDefined();
+    expect(isOption).toBeDefined();
     expect(intoOption).toBeDefined();
     expect(fromOption).toBeDefined();
   });

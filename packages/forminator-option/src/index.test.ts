@@ -3,6 +3,7 @@ import {
   fromOption,
   intoOption,
   isNoneError,
+  isOption,
   none,
   NoneError,
   some,
@@ -13,6 +14,7 @@ describe('index', function () {
   it('should exports', function () {
     expect(some).toBeDefined();
     expect(none).toBeDefined();
+    expect(isOption).toBeDefined();
 
     expect(intoOption).toBeDefined();
     expect(fromOption).toBeDefined();
