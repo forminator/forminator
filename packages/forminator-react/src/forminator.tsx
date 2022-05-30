@@ -3,7 +3,7 @@ import {
   ForminatorFragment,
   intoOption,
 } from '@forminator/core';
-import React, { ReactNode, useState } from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import { ExternalValueContextProvider } from './contexts/external-value-context';
 import { FragmentContextProvider } from './contexts/fragment-context';
 
@@ -20,8 +20,12 @@ export function Forminator<IValue, EValue>(
   const [rootFragment] = useState(
     () => props.rootFragment ?? createFragment<IValue, EValue>(undefined),
   );
+  const memoizedExternalValue = useMemo(
+    () => intoOption(externalValue),
+    [externalValue],
+  );
   return (
-    <ExternalValueContextProvider value={intoOption(externalValue)}>
+    <ExternalValueContextProvider value={memoizedExternalValue}>
       <FragmentContextProvider value={rootFragment}>
         {children}
       </FragmentContextProvider>

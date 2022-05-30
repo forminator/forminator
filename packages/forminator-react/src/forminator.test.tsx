@@ -51,4 +51,21 @@ describe('forminator', function () {
     );
     expect(result.current?.rootFragment).toBe(rootFragment);
   });
+  it('should provide same external value if external value props not changed', function () {
+    const wrapper = (props: { children?: ReactNode }) => {
+      return (
+        <Forminator externalValue={'external'}>{props.children}</Forminator>
+      );
+    };
+    const { result, rerender } = renderHook(
+      () => {
+        const externalValue = useExternalValue();
+        return { externalValue };
+      },
+      { wrapper },
+    );
+    const firstExternalValue = result.current?.externalValue;
+    rerender();
+    expect(result.current?.externalValue).toBe(firstExternalValue);
+  });
 });
