@@ -3,6 +3,7 @@ import {
   useComposer,
   useExternalValue,
   useFragment,
+  useInputValue$,
   useRootFragment,
 } from '.';
 
@@ -13,5 +14,6 @@ describe('index', function () {
     expect(useRootFragment).toBeDefined();
     expect(useExternalValue).toBeDefined();
     expect(useComposer).toBeDefined();
+    expect(useInputValue$).toBeDefined();
   });
 });

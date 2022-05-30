@@ -2,6 +2,7 @@ import { ForminatorFragment } from '@forminator/core';
 import { Option as Option_2 } from '@forminator/core';
 import { ReactNode } from 'react';
 import { ValueComposer } from '@forminator/core';
+import { Wire } from '@forminator/react-wire';
 
 export declare function Forminator<IValue, EValue>(
   props: ForminatorProps<IValue, EValue>,
@@ -23,6 +24,12 @@ export declare function useFragment<IValue, EValue>(): ForminatorFragment<
   IValue,
   EValue
 >;
+
+export declare function useInputValue$<Value>(): Wire<Value | undefined>;
+
+export declare function useInputValue$<Value>(
+  defaultInitialValue: Value,
+): Wire<Value>;
 
 export declare function useRootFragment<IValue, EValue>(): ForminatorFragment<
   IValue,

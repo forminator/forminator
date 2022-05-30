@@ -1,7 +1,7 @@
 import { getFinalValue } from '@forminator/core';
 import { renderHook } from '@forminator/test-render-hook';
 import { ReactNode } from 'react';
-import { getAtomicValueComposer } from './__fixture__/composers';
+import { getInputValueComposer } from './input/use-input-value';
 import { Forminator } from './forminator';
 import { useComposer } from './use-composer';
 import { useFragment } from './use-fragment';
@@ -31,7 +31,7 @@ describe('use composer', function () {
     };
     const { result } = renderHook(
       () => {
-        useComposer(getAtomicValueComposer());
+        useComposer(getInputValueComposer());
         const fragment = useFragment();
         return { fragment };
       },
@@ -46,7 +46,7 @@ describe('use composer', function () {
     };
     const { result } = renderHook(
       () => {
-        useComposer(getAtomicValueComposer());
+        useComposer(getInputValueComposer());
         const fragment = useFragment();
         return { fragment };
       },
