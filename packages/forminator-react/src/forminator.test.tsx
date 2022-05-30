@@ -17,8 +17,8 @@ describe('forminator', function () {
       },
       { wrapper },
     );
-    expect(result.current?.rootFragment).toBeDefined();
-    expect(result.current?.rootFragment.value$.getValue()).toBeUndefined();
+    expect(result.current.rootFragment).toBeDefined();
+    expect(result.current.rootFragment.value$.getValue()).toBeUndefined();
   });
   it('should provide external value', function () {
     const wrapper = (props: { children?: ReactNode }) => {
@@ -33,7 +33,7 @@ describe('forminator', function () {
       },
       { wrapper },
     );
-    expect(result.current?.externalValue.ok()).toBe('external');
+    expect(result.current.externalValue.ok()).toBe('external');
   });
   it('should provide root fragment from prop', function () {
     const rootFragment = createFragment();
@@ -49,7 +49,7 @@ describe('forminator', function () {
       },
       { wrapper },
     );
-    expect(result.current?.rootFragment).toBe(rootFragment);
+    expect(result.current.rootFragment).toBe(rootFragment);
   });
   it('should provide same external value if external value props not changed', function () {
     const wrapper = (props: { children?: ReactNode }) => {
@@ -64,8 +64,8 @@ describe('forminator', function () {
       },
       { wrapper },
     );
-    const firstExternalValue = result.current?.externalValue;
+    const firstExternalValue = result.current.externalValue;
     rerender();
-    expect(result.current?.externalValue).toBe(firstExternalValue);
+    expect(result.current.externalValue).toBe(firstExternalValue);
   });
 });

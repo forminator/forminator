@@ -7,15 +7,15 @@ describe('use root fragment', function () {
       const fragment = useRootFragment();
       return { fragment };
     });
-    expect(result.current?.fragment).toBeDefined();
+    expect(result.current.fragment).toBeDefined();
   });
   it('should returns the same fragment after rerender', function () {
     const { result, rerender } = renderHook(() => {
       const fragment = useRootFragment();
       return { fragment };
     });
-    const firstFragment = result.current?.fragment;
+    const firstFragment = result.current.fragment;
     rerender();
-    expect(result.current?.fragment).toBe(firstFragment);
+    expect(result.current.fragment).toBe(firstFragment);
   });
 });

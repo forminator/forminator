@@ -59,9 +59,9 @@ describe('test renderer', function () {
       },
       { initialProps: 5 },
     );
-    expect(result.current?.n).toBe(5);
+    expect(result.current.n).toBe(5);
     rerender(6);
-    expect(result.current?.n).toBe(6);
+    expect(result.current.n).toBe(6);
   });
   it('should set error when an error thrown', function () {
     const spy = suppressErrorOutput();

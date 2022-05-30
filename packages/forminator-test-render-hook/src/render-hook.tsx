@@ -10,7 +10,10 @@ import React, {
 import { ErrorBoundary, ErrorContext, ResetContext } from './error-boundary';
 
 export interface ResultRef<Result> {
-  current?: Result;
+  /**
+   * it can be undefined if the render callback throws an error
+   */
+  current: Result;
   error?: Error;
 }
 
@@ -51,7 +54,7 @@ export function renderHook<Result, Props>(
 ): RenderHookResult<Result, Props> | RenderHookResultWithoutProps<Result> {
   const { initialProps, wrapper: Wrapper = Fragment, strict = true } = options;
   const Strict = strict ? StrictMode : Fragment;
-  const result: ResultRef<Result> = { current: undefined, error: undefined };
+  const result: ResultRef<Result> = { current: undefined!, error: undefined };
 
   function TestComponent({
     renderCallbackProps,
@@ -78,7 +81,7 @@ export function renderHook<Result, Props>(
         resetErrorBoundary = () => {};
         reset?.();
       };
-      result.current = undefined;
+      result.current = undefined!;
       result.error = error;
     }, [error, reset]);
     return null;

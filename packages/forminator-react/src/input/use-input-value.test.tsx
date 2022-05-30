@@ -44,8 +44,8 @@ describe('use input value wire', function () {
       },
       { wrapper },
     );
-    expect(result.current?.value$.getValue()).toBe('external');
-    expect(getFinalValue(result.current?.fragment!).ok()).toBe('external');
+    expect(result.current.value$.getValue()).toBe('external');
+    expect(getFinalValue(result.current.fragment!).ok()).toBe('external');
   });
   it('should set initial value if external value is not presented', function () {
     const wrapper = (props: { children?: ReactNode }) => {
@@ -60,8 +60,8 @@ describe('use input value wire', function () {
       },
       { wrapper },
     );
-    expect(result.current?.value$.getValue()).toBe('initial');
-    expect(getFinalValue(result.current?.fragment!).ok()).toBe('initial');
+    expect(result.current.value$.getValue()).toBe('initial');
+    expect(getFinalValue(result.current.fragment!).ok()).toBe('initial');
   });
   it('should return wire with undefined value if initial and external value are not presented', function () {
     const wrapper = (props: { children?: ReactNode }) => {
@@ -76,8 +76,8 @@ describe('use input value wire', function () {
       },
       { wrapper },
     );
-    expect(result.current?.value$.getValue()).toBeUndefined();
-    expect(getFinalValue(result.current?.fragment!).isNone()).toBeTruthy();
+    expect(result.current.value$.getValue()).toBeUndefined();
+    expect(getFinalValue(result.current.fragment!).isNone()).toBeTruthy();
   });
   describe('String input', function () {
     describe('without initial value', function () {
