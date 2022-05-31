@@ -58,6 +58,7 @@
     "vite-plugin-dts": "^1.1.1"
   },
   "peerDependencies": {
+    "@forminator/jest-option": "*",
     "react": "^18",
     "react-dom": "^18"
   },

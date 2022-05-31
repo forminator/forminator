@@ -33,7 +33,7 @@ describe('forminator', function () {
       },
       { wrapper },
     );
-    expect(result.current.externalValue.ok()).toBe('external');
+    expect(result.current.externalValue).toBeSome('external');
   });
   it('should provide root fragment from prop', function () {
     const rootFragment = createFragment();

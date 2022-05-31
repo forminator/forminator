@@ -19,14 +19,14 @@ describe('getFinalValue', () => {
   it('should return none if composer not defined', () => {
     const fragment = createFragment(0);
     const finalValue = getFinalValue(fragment);
-    expect(finalValue).toEqual(none());
+    expect(finalValue).toBeNone();
   });
   it('should return value if composer defined', () => {
     const fragment = createFragment<number, number>(0);
     setComposer<number, number>(fragment, getAtomicValueComposer());
 
     const finalValue = getFinalValue(fragment);
-    expect(finalValue).toEqual(some(0));
+    expect(finalValue).toBeSome(0);
   });
   it('should return none if sub fragment is not ready', () => {
     const fragment = createFragment<ArrayFragmentValue<number>, number[]>([]);
@@ -38,7 +38,7 @@ describe('getFinalValue', () => {
 
     fragment.value$.setValue([item1, item2]);
     const finalValue = getFinalValue(fragment);
-    expect(finalValue).toEqual(none());
+    expect(finalValue).toBeNone();
   });
   it('should return value if all fragment is ready', () => {
     const fragment = createFragment<ArrayFragmentValue<number>, number[]>([]);
@@ -50,7 +50,7 @@ describe('getFinalValue', () => {
 
     fragment.value$.setValue([item1, item2]);
     const finalValue = getFinalValue(fragment);
-    expect(finalValue).toEqual(some([1, 2]));
+    expect(finalValue).toEqualSome([1, 2]);
   });
 });
 
@@ -58,14 +58,14 @@ describe('getFinalValue$', () => {
   it('should have none value if composer not defined', () => {
     const fragment = createFragment(0);
     const finalValue$ = getFinalValue$(fragment);
-    expect(finalValue$.getValue()).toEqual(none());
+    expect(finalValue$.getValue()).toBeNone();
   });
   it('should have value if composer defined', () => {
     const fragment = createFragment<number, number>(0);
     const finalValue$ = getFinalValue$(fragment);
 
     setComposer<number, number>(fragment, getAtomicValueComposer());
-    expect(finalValue$.getValue()).toEqual(some(0));
+    expect(finalValue$.getValue()).toBeSome(0);
   });
 
   it('should update when composer defined', () => {
@@ -84,13 +84,13 @@ describe('getFinalValue$', () => {
     setComposer(fragment, getArrayValueComposer());
 
     const finalValue$ = getFinalValue$(fragment);
-    expect(finalValue$.getValue()).toEqual(some([]));
+    expect(finalValue$.getValue()).toEqualSome([]);
 
     setComposer(item1, getAtomicValueComposer());
     // item2 has no composer
 
     fragment.value$.setValue([item1, item2]);
-    expect(finalValue$.getValue()).toEqual(none());
+    expect(finalValue$.getValue()).toBeNone();
   });
   it('should have value if all fragment is ready', () => {
     const fragment = createFragment<ArrayFragmentValue<number>, number[]>([]);
@@ -104,7 +104,7 @@ describe('getFinalValue$', () => {
 
     fragment.value$.setValue([item1, item2]);
 
-    expect(finalValue$.getValue()).toEqual(some([1, 2]));
+    expect(finalValue$.getValue()).toEqualSome([1, 2]);
   });
   it('should update value if all fragment is ready', () => {
     const fragment = createFragment<ArrayFragmentValue<number>, number[]>([]);
@@ -138,13 +138,13 @@ describe('getFinalValue$', () => {
     setComposer(item2, getAtomicValueComposer());
     setComposer(fragment, createTaggedValueComposer(keyFragment$));
 
-    expect(finalValue$.getValue()).toEqual(some(1));
+    expect(finalValue$.getValue()).toBeSome(1);
 
     const fn = jest.fn();
     finalValue$.subscribe(fn);
 
     keyFragment$.getValue().ok().value$.setValue('B');
-    expect(finalValue$.getValue()).toEqual(some(2));
+    expect(finalValue$.getValue()).toBeSome(2);
     expect(fn).toBeCalledWith(some(2));
   });
   it('should update value to none when active fragment is missing', () => {
@@ -160,13 +160,13 @@ describe('getFinalValue$', () => {
     setComposer(item1, getAtomicValueComposer());
     setComposer(fragment, createTaggedValueComposer(keyFragment$));
 
-    expect(finalValue$.getValue()).toEqual(some(1));
+    expect(finalValue$.getValue()).toBeSome(1);
 
     const fn = jest.fn();
     finalValue$.subscribe(fn);
 
     keyFragment$.getValue().ok().value$.setValue('B');
-    expect(finalValue$.getValue()).toEqual(none());
+    expect(finalValue$.getValue()).toBeNone();
     expect(fn).toBeCalledWith(none());
   });
   it('should cache final value wire', () => {

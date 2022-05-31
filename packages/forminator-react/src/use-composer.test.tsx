@@ -20,9 +20,9 @@ describe('use composer', function () {
         { wrapper },
       );
       const fragment = result.current.fragment!;
-      expect(fragment.composer$.getValue().isNone()).toBe(true);
+      expect(fragment.composer$.getValue()).toBeNone();
       fragment.value$.setValue(5);
-      expect(getFinalValue(fragment).isNone()).toBe(true);
+      expect(getFinalValue(fragment)).toBeNone();
     });
   });
   it('should set composer to fragment', function () {
@@ -37,8 +37,8 @@ describe('use composer', function () {
       },
       { wrapper },
     );
-    const composer = result.current.fragment.composer$.getValue().ok();
-    expect(composer).toBeDefined();
+    const composer = result.current.fragment.composer$.getValue();
+    expect(composer).toBeSome();
   });
   it('should make fragment usable', function () {
     const wrapper = (props: { children?: ReactNode }) => {
@@ -54,7 +54,7 @@ describe('use composer', function () {
     );
     const fragment = result.current.fragment!;
     fragment.value$.setValue(5);
-    const finalValue = getFinalValue(fragment).ok();
-    expect(finalValue).toBe(5);
+    const finalValue = getFinalValue(fragment);
+    expect(finalValue).toBeSome(5);
   });
 });
