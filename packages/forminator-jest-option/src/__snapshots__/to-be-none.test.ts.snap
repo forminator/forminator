@@ -1,0 +1,33 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`.not.toBeNone should fail on none 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.teBeNone()[22m
+
+Expected: not [32mnone()[39m
+Received: [31mnone()[39m
+"
+`;
+
+exports[`.toBeNone should fail on { some: false } 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).teBeNone()[22m
+
+Expected: [32mnone()[39m
+Received: [31m{\\"some\\": false}[39m
+"
+`;
+
+exports[`.toBeNone should fail on other value 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).teBeNone()[22m
+
+Expected: [32mnone()[39m
+Received: [31m5[39m
+"
+`;
+
+exports[`.toBeNone should fail on some 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).teBeNone()[22m
+
+Expected: [32mnone()[39m
+Received: [31msome([31m5[39m[31m)[39m
+"
+`;
