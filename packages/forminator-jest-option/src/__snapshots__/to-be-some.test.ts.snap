@@ -1,0 +1,100 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`.not.toBeSome should fail on some 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.toBeSome()[22m
+
+Expected: not [32msome([32mAnything[39m[32m)[39m
+Received: [31msome([31m5[39m[31m)[39m
+"
+`;
+
+exports[`.not.toBeSome should fail on some with expected value 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.toBeSome([22m[32mexpected[39m[2m)[22m
+
+Expected: not [32msome([32m5[39m[32m)[39m
+"
+`;
+
+exports[`.not.toBeSome should fail on some with expected value 2`] = `
+"[2mexpect([22m[31mreceived[39m[2m).[22mnot[2m.toBeSome([22m[32mexpected[39m[2m)[22m
+
+Expected: not [32msome([32m{\\"foo\\": 5}[39m[32m)[39m
+"
+`;
+
+exports[`.toBeSome should fail on none 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).toBeSome()[22m
+
+Expected: [32msome([32mAnything[39m[32m)[39m
+Received: [31mnone()[39m
+"
+`;
+
+exports[`.toBeSome should fail on none with expected value 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).toBeSome([22m[32mexpected[39m[2m)[22m
+
+Expected: [32msome([32m5[39m[32m)[39m
+Received: [31mnone()[39m
+"
+`;
+
+exports[`.toBeSome should fail on none with expected value 2`] = `
+"[2mexpect([22m[31mreceived[39m[2m).toBeSome([22m[32mexpected[39m[2m)[22m
+
+Expected: [32msome([32m{\\"foo\\": 5}[39m[32m)[39m
+Received: [31mnone()[39m
+"
+`;
+
+exports[`.toBeSome should fail on other value 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).toBeSome()[22m
+
+Expected: [32msome([32mAnything[39m[32m)[39m
+Received: [31m5[39m
+"
+`;
+
+exports[`.toBeSome should fail on other value with expected value 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).toBeSome([22m[32mexpected[39m[2m)[22m
+
+Expected: [32msome([32m5[39m[32m)[39m
+Received: [31m5[39m
+"
+`;
+
+exports[`.toBeSome should fail on other value with expected value 2`] = `
+"[2mexpect([22m[31mreceived[39m[2m).toBeSome([22m[32mexpected[39m[2m)[22m
+
+Expected: [32msome([32m{\\"foo\\": 5}[39m[32m)[39m
+Received: [31m{\\"foo\\": 5}[39m
+"
+`;
+
+exports[`.toBeSome should fail on some with different value 1`] = `
+"[2mexpect([22m[31mreceived[39m[2m).toBeSome([22m[32mexpected[39m[2m) // some with different value[22m
+
+Expected: [32m5[39m
+Received: [31m6[39m
+"
+`;
+
+exports[`.toBeSome should fail on some with different value 2`] = `
+"[2mexpect([22m[31mreceived[39m[2m).toBeSome([22m[32mexpected[39m[2m) // some with different value[22m
+
+[32m- Expected  - 1[39m
+[31m+ Received  + 1[39m
+
+[2m  Object {[22m
+[32m-   \\"foo\\": 6,[39m
+[31m+   \\"foo\\": 5,[39m
+[2m  }[22m
+"
+`;
+
+exports[`.toBeSome should fail on some with different value 3`] = `
+"[2mexpect([22m[31mreceived[39m[2m).toBeSome([22m[32mexpected[39m[2m) // some with different value[22m
+
+Expected: [32m{\\"foo\\": 5}[39m
+Received: serializes to the same string
+"
+`;
