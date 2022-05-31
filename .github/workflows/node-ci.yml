@@ -13,9 +13,9 @@ jobs:
         with:
           node-version: "16.x"
       - run: yarn
-      - run: yarn workspaces run lint
-      - run: yarn workspaces run format:check
+      - run: yarn workspaces run lint --color
+      - run: yarn workspaces run format:check --color
       - run: yarn workspaces run build
-      - run: yarn workspaces run test
+      - run: yarn workspaces run test --color
       - run: git diff --exit-code --name-only
       - uses: codecov/codecov-action@v2
