@@ -23,20 +23,20 @@ describe('getFinalState', () => {
     it('should return none without value composer', () => {
       const fragment = createFragment<number, number>(0);
       const loading = getFinalState(fragment, loadingStateComposer);
-      expect(loading).toEqual(none());
+      expect(loading).toBeNone();
     });
     it('should return state without state wire', () => {
       const fragment = createFragment<number, number>(0);
       setComposer(fragment, getAtomicValueComposer());
       const loading = getFinalState(fragment, loadingStateComposer);
-      expect(loading).toEqual(some(false));
+      expect(loading).toBeSome(false);
     });
     it('should return state with state wire', () => {
       const fragment = createFragment<number, number>(0);
       setComposer(fragment, getAtomicValueComposer());
       getState$(fragment, loadingStateComposer, false);
       const loading = getFinalState(fragment, loadingStateComposer);
-      expect(loading).toEqual(some(false));
+      expect(loading).toBeSome(false);
     });
     it('should update when state changed', () => {
       const fragment = createFragment<number, number>(0);
@@ -44,7 +44,7 @@ describe('getFinalState', () => {
       const state$ = getState$(fragment, loadingStateComposer, false);
       state$.fns.loading();
       const loading = getFinalState(fragment, loadingStateComposer);
-      expect(loading).toEqual(some(true));
+      expect(loading).toBeSome(true);
     });
   });
   describe('with composite fragments', () => {
@@ -60,7 +60,7 @@ describe('getFinalState', () => {
       setComposer(fragment, getArrayValueComposer());
 
       const loading = getFinalState(fragment, loadingStateComposer);
-      expect(loading).toEqual(none());
+      expect(loading).toBeNone();
     });
     it('should return state when all composer defined', () => {
       const item1 = createFragment<number, number>(1);
@@ -74,7 +74,7 @@ describe('getFinalState', () => {
       setComposer(fragment, getArrayValueComposer());
 
       const loading = getFinalState(fragment, loadingStateComposer);
-      expect(loading).toEqual(some(false));
+      expect(loading).toBeSome(false);
     });
 
     it('should return update state when some state changed', () => {
@@ -95,7 +95,7 @@ describe('getFinalState', () => {
 
       state$.fns.loading();
 
-      expect(getFinalState(fragment, loadingStateComposer)).toEqual(some(true));
+      expect(getFinalState(fragment, loadingStateComposer)).toBeSome(true);
       state$.fns.ready();
 
       expect(getFinalState(fragment, loadingStateComposer)).toEqual(
@@ -126,7 +126,7 @@ describe('getFinalState', () => {
 
       state$.fns.loading();
 
-      expect(getFinalState(fragment, loadingStateComposer)).toEqual(some(true));
+      expect(getFinalState(fragment, loadingStateComposer)).toBeSome(true);
       keyFragment$.getValue().ok().value$.setValue('B');
 
       expect(getFinalState(fragment, loadingStateComposer)).toEqual(
@@ -150,7 +150,7 @@ describe('getFinalState', () => {
       setComposer(item2, getAtomicValueComposer());
       setComposer(fragment, createTaggedValueComposer(keyFragment$));
 
-      expect(getFinalState(fragment, loadingStateComposer)).toEqual(none());
+      expect(getFinalState(fragment, loadingStateComposer)).toBeNone();
     });
     it('should update state only based on active fragments when fragment is missing', () => {
       type Key = 'A' | 'B';
@@ -172,10 +172,10 @@ describe('getFinalState', () => {
 
       state$.fns.loading();
 
-      expect(getFinalState(fragment, loadingStateComposer)).toEqual(some(true));
+      expect(getFinalState(fragment, loadingStateComposer)).toBeSome(true);
       keyFragment$.getValue().ok().value$.setValue('B');
 
-      expect(getFinalState(fragment, loadingStateComposer)).toEqual(none());
+      expect(getFinalState(fragment, loadingStateComposer)).toBeNone();
     });
   });
 });
@@ -185,20 +185,20 @@ describe('getFinalState$', () => {
     it('should have none value without value composer', () => {
       const fragment = createFragment<number, number>(0);
       const loading$ = getFinalState$(fragment, loadingStateComposer);
-      expect(loading$.getValue()).toEqual(none());
+      expect(loading$.getValue()).toBeNone();
     });
     it('should have state without state wire', () => {
       const fragment = createFragment<number, number>(0);
       const loading$ = getFinalState$(fragment, loadingStateComposer);
       setComposer(fragment, getAtomicValueComposer());
-      expect(loading$.getValue()).toEqual(some(false));
+      expect(loading$.getValue()).toBeSome(false);
     });
     it('should have state with state wire', () => {
       const fragment = createFragment<number, number>(0);
       const loading$ = getFinalState$(fragment, loadingStateComposer);
       setComposer(fragment, getAtomicValueComposer());
       getState$(fragment, loadingStateComposer, false);
-      expect(loading$.getValue()).toEqual(some(false));
+      expect(loading$.getValue()).toBeSome(false);
     });
     it('should update when state changed', () => {
       const fragment = createFragment<number, number>(0);
@@ -206,7 +206,7 @@ describe('getFinalState$', () => {
       setComposer(fragment, getAtomicValueComposer());
       const state$ = getState$(fragment, loadingStateComposer, false);
       state$.fns.loading();
-      expect(loading$.getValue()).toEqual(some(true));
+      expect(loading$.getValue()).toBeSome(true);
     });
   });
   describe('with composite fragments', () => {
@@ -222,7 +222,7 @@ describe('getFinalState$', () => {
       // item2 has no composer
       setComposer(fragment, getArrayValueComposer());
 
-      expect(loading$.getValue()).toEqual(none());
+      expect(loading$.getValue()).toBeNone();
     });
 
     it('should have state when all composer defined', () => {
@@ -237,7 +237,7 @@ describe('getFinalState$', () => {
       setComposer(item2, getAtomicValueComposer());
       setComposer(fragment, getArrayValueComposer());
 
-      expect(loading$.getValue()).toEqual(some(false));
+      expect(loading$.getValue()).toBeSome(false);
     });
 
     it('should have updated state when some state changed', () => {
@@ -253,14 +253,14 @@ describe('getFinalState$', () => {
       setComposer(fragment, getArrayValueComposer());
 
       const state$ = getState$(fragment, loadingStateComposer);
-      expect(finalState$.getValue()).toEqual(some(false));
+      expect(finalState$.getValue()).toBeSome(false);
 
       state$.fns.loading();
 
-      expect(finalState$.getValue()).toEqual(some(true));
+      expect(finalState$.getValue()).toBeSome(true);
       state$.fns.ready();
 
-      expect(finalState$.getValue()).toEqual(some(false));
+      expect(finalState$.getValue()).toBeSome(false);
     });
     it('should update state only based on active fragments', () => {
       type Key = 'A' | 'B';

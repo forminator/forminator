@@ -45,7 +45,7 @@ describe('use input value wire', function () {
       { wrapper },
     );
     expect(result.current.value$.getValue()).toBe('external');
-    expect(getFinalValue(result.current.fragment!).ok()).toBe('external');
+    expect(getFinalValue(result.current.fragment!)).toBeSome('external');
   });
   it('should set initial value if external value is not presented', function () {
     const wrapper = (props: { children?: ReactNode }) => {
@@ -61,7 +61,7 @@ describe('use input value wire', function () {
       { wrapper },
     );
     expect(result.current.value$.getValue()).toBe('initial');
-    expect(getFinalValue(result.current.fragment!).ok()).toBe('initial');
+    expect(getFinalValue(result.current.fragment!)).toBeSome('initial');
   });
   it('should return wire with undefined value if initial and external value are not presented', function () {
     const wrapper = (props: { children?: ReactNode }) => {
@@ -77,7 +77,7 @@ describe('use input value wire', function () {
       { wrapper },
     );
     expect(result.current.value$.getValue()).toBeUndefined();
-    expect(getFinalValue(result.current.fragment!).isNone()).toBeTruthy();
+    expect(getFinalValue(result.current.fragment!)).toBeNone();
   });
   describe('String input', function () {
     describe('without initial value', function () {
@@ -88,8 +88,8 @@ describe('use input value wire', function () {
             <StringInput data-testid="input" />
           </Forminator>,
         );
-        expect(rootFragment.value$.getValue()).toEqual('');
-        expect(getFinalValue(rootFragment).ok()).toEqual('');
+        expect(rootFragment.value$.getValue()).toBe('');
+        expect(getFinalValue(rootFragment)).toBeSome('');
         expect(screen.getByTestId('input')).toHaveValue('');
       });
     });
@@ -100,8 +100,8 @@ describe('use input value wire', function () {
           <StringInput data-testid="input" defaultValue="default value" />
         </Forminator>,
       );
-      expect(rootFragment.value$.getValue()).toEqual('external');
-      expect(getFinalValue(rootFragment).ok()).toEqual('external');
+      expect(rootFragment.value$.getValue()).toBe('external');
+      expect(getFinalValue(rootFragment)).toBeSome('external');
       expect(screen.getByTestId('input')).toHaveValue('external');
     });
     it('should respect default value if external value not presented', function () {
@@ -111,8 +111,8 @@ describe('use input value wire', function () {
           <StringInput data-testid="input" defaultValue="default value" />
         </Forminator>,
       );
-      expect(rootFragment.value$.getValue()).toEqual('default value');
-      expect(getFinalValue(rootFragment).ok()).toEqual('default value');
+      expect(rootFragment.value$.getValue()).toBe('default value');
+      expect(getFinalValue(rootFragment)).toBeSome('default value');
       expect(screen.getByTestId('input')).toHaveValue('default value');
     });
   });
