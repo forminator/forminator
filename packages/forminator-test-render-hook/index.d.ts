@@ -39,7 +39,10 @@ export declare interface RenderHookResultWithoutProps<Result> {
 }
 
 export declare interface ResultRef<Result> {
-  current?: Result;
+  /**
+   * it can be undefined if the render callback throws an error
+   */
+  current: Result;
   error?: Error;
 }
 

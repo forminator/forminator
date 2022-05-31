@@ -19,7 +19,7 @@ describe('use composer', function () {
         },
         { wrapper },
       );
-      const fragment = result.current?.fragment!;
+      const fragment = result.current.fragment!;
       expect(fragment.composer$.getValue().isNone()).toBe(true);
       fragment.value$.setValue(5);
       expect(getFinalValue(fragment).isNone()).toBe(true);
@@ -37,7 +37,7 @@ describe('use composer', function () {
       },
       { wrapper },
     );
-    const composer = result.current?.fragment.composer$.getValue().ok();
+    const composer = result.current.fragment.composer$.getValue().ok();
     expect(composer).toBeDefined();
   });
   it('should make fragment usable', function () {
@@ -52,7 +52,7 @@ describe('use composer', function () {
       },
       { wrapper },
     );
-    const fragment = result.current?.fragment!;
+    const fragment = result.current.fragment!;
     fragment.value$.setValue(5);
     const finalValue = getFinalValue(fragment).ok();
     expect(finalValue).toBe(5);
