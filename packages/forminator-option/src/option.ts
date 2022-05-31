@@ -1,8 +1,17 @@
-export type Some<Value> = { some: true; value: Value } & OptionFns<Value>;
-export type None<Value> = { some: false } & OptionFns<Value>;
+export const FORMINATOR_OPTION = Symbol('FORMINATOR_OPTION');
+
+export type Some<Value> = {
+  some: true;
+  value: Value;
+} & OptionFns<Value>;
+export type None<Value> = {
+  some: false;
+} & OptionFns<Value>;
 export type Option<Value> = Some<Value> | None<Value>;
 
 export interface OptionFns<Value> {
+  readonly [FORMINATOR_OPTION]: true;
+
   ok(this: Option<Value>): Value;
 
   or(this: Option<Value>, value: Value): Value;
@@ -16,6 +25,7 @@ export interface OptionFns<Value> {
 
 function getOptionFns<Value>(): OptionFns<Value> {
   return {
+    [FORMINATOR_OPTION]: true,
     ok() {
       return ok(this);
     },
@@ -42,6 +52,10 @@ export function some<Value>(value: Value): Some<Value> & OptionFns<Value> {
 
 export function none<Value>(): None<Value> {
   return Object.assign(Object.create(optionFns), { some: false });
+}
+
+export function isOption(value: any): value is Option<unknown> {
+  return !!(value && value[FORMINATOR_OPTION]);
 }
 
 function isSome<Value>(

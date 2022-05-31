@@ -1,6 +1,7 @@
 export {
   some,
   none,
+  isOption,
   intoOption,
   fromOption,
   catchNoneError,

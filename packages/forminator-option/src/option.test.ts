@@ -2,6 +2,7 @@ import {
   catchNoneError,
   fromOption,
   intoOption,
+  isOption,
   none,
   NoneError,
   Option,
@@ -59,6 +60,45 @@ describe('option', () => {
     it('should returns default value for none', function () {
       expect(none().or(10)).toEqual(10);
     });
+  });
+});
+
+describe('isOption', function () {
+  it('should return true for any option', function () {
+    expect(isOption(some(5))).toBe(true);
+    expect(isOption(none())).toBe(true);
+  });
+  it('should return false for other objects', function () {
+    expect(isOption(5)).toBe(false);
+    expect(isOption(null)).toBe(false);
+    expect(isOption(undefined)).toBe(false);
+    expect(isOption({})).toBe(false);
+
+    expect(isOption({ some: false })).toBe(false);
+    expect(isOption({ some: true })).toBe(false);
+  });
+  it('should narrow types correctly', function () {
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    function fn1(o: number | Option<number>) {
+      if (isOption(o)) {
+        const v: Option<number> = o;
+      }
+      if (isOption(o)) {
+        // @ts-expect-error
+        const s: Option<string> = o;
+      }
+    }
+
+    function fn2(o: any) {
+      if (isOption(o)) {
+        const s: Option<unknown> = o;
+      }
+      if (isOption(o)) {
+        // @ts-expect-error
+        const v: Option<number> = o;
+      }
+    }
+    /* eslint-enable */
   });
 });
 

@@ -1,5 +1,6 @@
 import { fromOption } from '@forminator/option';
 import { intoOption } from '@forminator/option';
+import { isOption } from '@forminator/option';
 import { None } from '@forminator/option';
 import { none } from '@forminator/option';
 import { Option as Option_2 } from '@forminator/option';
@@ -71,6 +72,8 @@ export { intoOption };
 export declare function isForminatorFragment<IValue, EValue>(
   value: any,
 ): value is ForminatorFragment<IValue, EValue>;
+
+export { isOption };
 
 export { None };
 
