@@ -39,6 +39,7 @@
     "@testing-library/react": "^13.2.0",
     "@testing-library/react-hooks": "^8.0.0",
     "@testing-library/user-event": "^14.2.0",
+    "@types/lodash": "^4.14",
     "@types/jest": "^27",
     "@types/node": "^17",
     "@types/react": "^18.0.9",
@@ -64,6 +65,7 @@
   },
   "dependencies": {
     "@forminator/react-wire": "^0.5.0",
-    "@forminator/core": "*"
+    "@forminator/core": "*",
+    "lodash": "^4.17"
   }
 }

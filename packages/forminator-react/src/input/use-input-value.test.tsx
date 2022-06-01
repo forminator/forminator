@@ -1,7 +1,7 @@
 import { createFragment, getFinalValue } from '@forminator/core';
 import { useWireValue } from '@forminator/react-wire';
 import { renderHook } from '@forminator/test-render-hook';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import {
   ChangeEvent,
   InputHTMLAttributes,
@@ -114,6 +114,20 @@ describe('use input value wire', function () {
       expect(rootFragment.value$.getValue()).toBe('default value');
       expect(getFinalValue(rootFragment)).toBeSome('default value');
       expect(screen.getByTestId('input')).toHaveValue('default value');
+    });
+    it('should have updated value input changed', function () {
+      const rootFragment = createFragment();
+      render(
+        <Forminator rootFragment={rootFragment}>
+          <StringInput data-testid="input" />
+        </Forminator>,
+      );
+      fireEvent.change(screen.getByTestId('input'), {
+        target: { value: 'new value' },
+      });
+      expect(rootFragment.value$.getValue()).toBe('new value');
+      expect(getFinalValue(rootFragment)).toBeSome('new value');
+      expect(screen.getByTestId('input')).toHaveValue('new value');
     });
   });
 });
