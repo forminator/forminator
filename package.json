@@ -13,7 +13,7 @@
     "packages/*"
   ],
   "devDependencies": {
-    "@changesets/cli": "^2.22.0",
+    "@changesets/cli": "^2.24.2",
     "@commitlint/cli": "^17.0.0",
     "@commitlint/config-conventional": "^17.0.0",
     "husky": "^8.0.1",
@@ -22,6 +22,5 @@
   },
   "scripts": {
     "prepare": "husky install"
-  },
-  "packageManager": "yarn@1.22.17"
+  }
 }

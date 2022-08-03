@@ -7,15 +7,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js
-        uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: pnpm/action-setup@v2
         with:
-          node-version: "16.x"
-      - run: yarn
-      - run: yarn workspaces run lint --color
-      - run: yarn workspaces run format:check --color
-      - run: yarn workspaces run build
-      - run: yarn workspaces run test --color
+          version: 7
+      - name: Use Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile --recursive
+      - run: pnpm -r run lint
+      - run: pnpm -r run format:check
+      - run: pnpm -r run build
+      - run: pnpm -r run test
       - run: git diff --exit-code --name-only
       - uses: codecov/codecov-action@v2

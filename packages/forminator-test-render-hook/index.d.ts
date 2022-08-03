@@ -1,5 +1,3 @@
-/// <reference types="jest" />
-
 import { act } from '@testing-library/react';
 import { ComponentType } from 'react';
 
@@ -46,9 +44,6 @@ export declare interface ResultRef<Result> {
   error?: Error;
 }
 
-export declare function suppressErrorOutput(): jest.SpyInstance<
-  void,
-  [message?: any, ...optionalParams: any[]]
->;
+export declare function suppressErrorOutput(): any;
 
 export {};

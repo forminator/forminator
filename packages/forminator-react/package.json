@@ -22,48 +22,49 @@
     "node": "^12.20.0 || ^14.13.1 || >=16.0.0"
   },
   "scripts": {
-    "pre-commit": "tsc && lint-staged && yarn lint",
+    "pre-commit": "tsc && lint-staged && pnpm run lint",
     "lint": "eslint --max-warnings=0 src/**/*.{ts,tsx}",
     "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,yml,css,scss,md}'",
     "format:check": "prettier --check '**/*.{js,jsx,ts,tsx,json,yml,css,scss,md}'",
     "test": "jest --coverage --verbose",
     "build:dts": "api-extractor run --local --verbose && prettier --write index.d.ts",
-    "build": "tsc && vite build && yarn build:dts",
-    "prepublishOnly": "yarn build"
+    "build": "tsc && vite build && pnpm run build:dts",
+    "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
+    "@forminator/jest-option": "*",
     "@forminator/test-render-hook": "*",
     "@microsoft/api-extractor": "^7",
     "@testing-library/dom": "^8",
     "@testing-library/jest-dom": "^5",
-    "@testing-library/react": "^13.2.0",
-    "@testing-library/react-hooks": "^8.0.0",
-    "@testing-library/user-event": "^14.2.0",
-    "@types/jest": "^27",
-    "@types/node": "^17",
-    "@types/react": "^18.0.9",
-    "@types/react-dom": "^18.0.4",
-    "@vitejs/plugin-react": "^1",
+    "@testing-library/react": "^13",
+    "@testing-library/react-hooks": "^8",
+    "@testing-library/user-event": "^14",
+    "@types/jest": "^28",
+    "@types/node": "^18",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/testing-library__jest-dom": "^5",
+    "@vitejs/plugin-react": "^2",
     "eslint": "^8",
     "eslint-config-react-app": "^7",
-    "husky": "^8.0.1",
-    "jest": "^28.1.0",
-    "lint-staged": "^12",
+    "husky": "^8",
+    "jest": "^28",
+    "lint-staged": "^13",
     "prettier": "^2",
-    "react": "^18.1.0",
-    "react-dom": "^18.1.0",
-    "ts-jest": "^28.0.2",
+    "react": "^18",
+    "react-dom": "^18",
+    "ts-jest": "^28",
     "typescript": "^4",
-    "vite": "^2",
-    "vite-plugin-dts": "^1.1.1"
+    "vite": "^3",
+    "vite-plugin-dts": "^1"
   },
   "peerDependencies": {
-    "@forminator/jest-option": "*",
     "react": "^18",
     "react-dom": "^18"
   },
   "dependencies": {
-    "@forminator/react-wire": "^0.5.0",
-    "@forminator/core": "*"
+    "@forminator/core": "*",
+    "@forminator/react-wire": "^0.5"
   }
 }
