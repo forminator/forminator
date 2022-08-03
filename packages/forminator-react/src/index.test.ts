@@ -1,4 +1,6 @@
 import {
+  DictInput,
+  DictInputItem,
   Forminator,
   useComposer,
   useExternalValue,
@@ -15,5 +17,7 @@ describe('index', function () {
     expect(useExternalValue).toBeDefined();
     expect(useComposer).toBeDefined();
     expect(useInputValue$).toBeDefined();
+    expect(DictInput).toBeDefined();
+    expect(DictInputItem).toBeDefined();
   });
 });

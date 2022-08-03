@@ -4,6 +4,23 @@ import { ReactNode } from 'react';
 import { ValueComposer } from '@forminator/core';
 import { Wire } from '@forminator/react-wire';
 
+export declare function DictInput(props: DictInputProps): JSX.Element;
+
+export declare function DictInputItem<Value>(
+  props: DictInputItemProps<Value>,
+): JSX.Element | null;
+
+export declare interface DictInputItemProps<Value> {
+  field: string;
+  keep?: boolean;
+  defaultInitialValue?: Value;
+  children?: ReactNode;
+}
+
+export declare interface DictInputProps {
+  children?: ReactNode;
+}
+
 export declare function Forminator<IValue, EValue>(
   props: ForminatorProps<IValue, EValue>,
 ): JSX.Element;
