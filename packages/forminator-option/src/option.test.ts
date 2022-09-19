@@ -19,6 +19,10 @@ describe('option', () => {
       const some5 = some(5);
       expect(some(5)).toBe(some5);
     });
+    it('should throw if try to create some of undefined', function () {
+      // @ts-expect-error
+      expect(() => some(undefined)).toThrow("some value can't be undefined");
+    });
   });
   describe('none', () => {
     it('should be none', () => {
@@ -50,6 +54,9 @@ describe('option', () => {
       // @ts-expect-error
       expect(() => doubleX(some(null))).toThrow();
     });
+    it('should returns none if fn returns undefined', function () {
+      expect(catchNoneError(() => undefined)).toBe(none());
+    });
   });
   describe('map', () => {
     const double = (o: Option<number>) => o.map((v) => v * 2);
@@ -59,10 +66,13 @@ describe('option', () => {
     it('should map none', () => {
       expect(double(none())).toEqual(none());
     });
+    it('should returns none if function returns undefined', function () {
+      expect(some(5).map((n) => undefined)).toBe(none());
+    });
   });
   describe('or', function () {
     it('should returns some value', function () {
-      expect(some(5).or(10)).toEqual(5);
+      expect(some(5 as number).or(10)).toEqual(5);
     });
     it('should returns default value for none', function () {
       expect(none().or(10)).toEqual(10);
