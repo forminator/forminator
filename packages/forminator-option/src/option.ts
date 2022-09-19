@@ -48,7 +48,12 @@ function getOptionFns<Value>(): OptionFns<Value> {
 
 const optionFns = getOptionFns<any>();
 
-function createSome<Value>(value: Value): Some<Value> & OptionFns<Value> {
+function createSome<Value extends {} | null>(
+  value: Value,
+): Some<Value> & OptionFns<Value> {
+  if (value === undefined) {
+    throw new Error("some value can't be undefined");
+  }
   return Object.assign(Object.create(optionFns), { some: true, value });
 }
 
@@ -60,7 +65,9 @@ const theNone = createNone<any>();
 
 const cache = new FirmMap<any, Some<any>>();
 
-export function some<Value>(value: Value): Some<Value> & OptionFns<Value> {
+export function some<Value extends {} | null>(
+  value: Value,
+): Some<Value> & OptionFns<Value> {
   if (!cache.has(value)) {
     cache.set(value, createSome(value));
   }
@@ -118,7 +125,7 @@ export function throwNoneError(): never {
 
 export function catchNoneError<R>(fn: () => R): Option<R> {
   try {
-    return some(fn());
+    return intoOption(fn());
   } catch (e) {
     if (isNoneError(e)) {
       return none();
@@ -131,7 +138,7 @@ function mapOption<V, T>(option: Option<V>, fn: (v: V) => T): Option<T> {
   if (isNone(option)) {
     return none();
   }
-  return some(fn(option.value));
+  return intoOption(fn(option.value));
 }
 
 export function intoOption<Value>(value: Value | undefined): Option<Value> {

@@ -41,7 +41,7 @@ export declare type Some<Value> = {
   value: Value;
 } & OptionFns<Value>;
 
-export declare function some<Value>(
+export declare function some<Value extends {} | null>(
   value: Value,
 ): Some<Value> & OptionFns<Value>;
 

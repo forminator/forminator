@@ -6,7 +6,7 @@ import {
   printReceivedOption,
 } from './print-utils';
 
-export const toEqualSome: jest.CustomMatcher = function <E>(
+export const toEqualSome: jest.CustomMatcher = function <E extends {} | null>(
   this: jest.MatcherContext,
   received: any,
   expected: E,
