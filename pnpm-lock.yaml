@@ -104,6 +104,7 @@ importers:
       eslint: ^8
       eslint-config-react-app: ^7
       jest: ^28
+      jest-leak-detector: ^29.0.3
       lint-staged: ^13
       prettier: ^2
       ts-jest: ^28
@@ -117,6 +118,7 @@ importers:
       eslint: 8.21.0
       eslint-config-react-app: 7.0.1_524h4zabziqjr7kb55jfgruxhm
       jest: 28.1.3_@types+node@18.6.4
+      jest-leak-detector: 29.0.3
       lint-staged: 13.0.3
       prettier: 2.7.1
       ts-jest: 28.0.7_oavexkd2euoi6eueqpz7c42uqe
@@ -2194,6 +2196,13 @@ packages:
   /@jest/schemas/28.1.3:
     resolution: {integrity: sha512-/l/VWsdt/aBXgjshLWOFyFt3IVdYypu5y2Wn2rOO1un6nkqIn8SLXzgIMYXFyYsRWDyF5EthmKJMIdJvk08grg==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
+    dependencies:
+      '@sinclair/typebox': 0.24.26
+    dev: true
+
+  /@jest/schemas/29.0.0:
+    resolution: {integrity: sha512-3Ab5HgYIIAnS0HjqJHQYZS+zXc4tUmTmBH3z83ajI6afXp8X3ZtdLX+nXx+I7LNkJD7uN9LAVhgnjDgZa2z0kA==}
+    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
     dependencies:
       '@sinclair/typebox': 0.24.26
     dev: true
@@ -5374,6 +5383,11 @@ packages:
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
     dev: true
 
+  /jest-get-type/29.0.0:
+    resolution: {integrity: sha512-83X19z/HuLKYXYHskZlBAShO7UfLFXu/vWajw9ZNJASN32li8yHMaVGAQqxFW1RCFOkB7cubaL6FaJVQqqJLSw==}
+    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+    dev: true
+
   /jest-haste-map/28.1.3:
     resolution: {integrity: sha512-3S+RQWDXccXDKSWnkHa/dPwt+2qwA8CJzR61w3FoYCvoo3Pn8tvGcysmMF0Bj0EX5RYvAI2EIvC57OmotfdtKA==}
     engines: {node: ^12.13.0 || ^14.15.0 || ^16.10.0 || >=17.0.0}
@@ -5399,6 +5413,14 @@ packages:
     dependencies:
       jest-get-type: 28.0.2
       pretty-format: 28.1.3
+    dev: true
+
+  /jest-leak-detector/29.0.3:
+    resolution: {integrity: sha512-YfW/G63dAuiuQ3QmQlh8hnqLDe25WFY3eQhuc/Ev1AGmkw5zREblTh7TCSKLoheyggu6G9gxO2hY8p9o6xbaRQ==}
+    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+    dependencies:
+      jest-get-type: 29.0.0
+      pretty-format: 29.0.3
     dev: true
 
   /jest-matcher-utils/28.1.3:
@@ -6509,6 +6531,15 @@ packages:
     dependencies:
       '@jest/schemas': 28.1.3
       ansi-regex: 5.0.1
+      ansi-styles: 5.2.0
+      react-is: 18.2.0
+    dev: true
+
+  /pretty-format/29.0.3:
+    resolution: {integrity: sha512-cHudsvQr1K5vNVLbvYF/nv3Qy/F/BcEKxGuIeMiVMRHxPOO1RxXooP8g/ZrwAp7Dx+KdMZoOc7NxLHhMrP2f9Q==}
+    engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
+    dependencies:
+      '@jest/schemas': 29.0.0
       ansi-styles: 5.2.0
       react-is: 18.2.0
     dev: true
