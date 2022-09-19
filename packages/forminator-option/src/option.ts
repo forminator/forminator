@@ -1,3 +1,5 @@
+import { FirmMap } from './firm-map';
+
 export const FORMINATOR_OPTION = Symbol('FORMINATOR_OPTION');
 
 export type Some<Value> = {
@@ -46,12 +48,27 @@ function getOptionFns<Value>(): OptionFns<Value> {
 
 const optionFns = getOptionFns<any>();
 
-export function some<Value>(value: Value): Some<Value> & OptionFns<Value> {
+function createSome<Value>(value: Value): Some<Value> & OptionFns<Value> {
   return Object.assign(Object.create(optionFns), { some: true, value });
 }
 
-export function none<Value>(): None<Value> {
+function createNone<Value>(): None<Value> {
   return Object.assign(Object.create(optionFns), { some: false });
+}
+
+const theNone = createNone<any>();
+
+const cache = new FirmMap<any, Some<any>>();
+
+export function some<Value>(value: Value): Some<Value> & OptionFns<Value> {
+  if (!cache.has(value)) {
+    cache.set(value, createSome(value));
+  }
+  return cache.get(value)!;
+}
+
+export function none<Value>(): None<Value> {
+  return theNone;
 }
 
 export function isOption(value: any): value is Option<unknown> {

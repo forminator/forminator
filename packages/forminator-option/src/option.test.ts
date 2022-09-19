@@ -15,11 +15,18 @@ describe('option', () => {
       expect(some(5).isSome()).toBe(true);
       expect(some(5).isNone()).toBe(false);
     });
+    it('should returns same value', function () {
+      const some5 = some(5);
+      expect(some(5)).toBe(some5);
+    });
   });
   describe('none', () => {
     it('should be none', () => {
       expect(none().isSome()).toBe(false);
       expect(none().isNone()).toBe(true);
+    });
+    it('should returns same value', function () {
+      expect(none()).toBe(none());
     });
   });
   describe('ok', () => {
