@@ -1,7 +1,7 @@
 import { createFragment, ForminatorFragment } from '@forminator/core';
 import { fromOption, intoOption } from '@forminator/option';
 import { useWireValue } from '@forminator/react-wire';
-import { ReactNode, useLayoutEffect, useMemo, useState } from 'react';
+import { ReactNode, useLayoutEffect, useState } from 'react';
 import { ExternalValueContextProvider } from '../contexts/external-value-context';
 import { FragmentContextProvider } from '../contexts/fragment-context';
 import { useExternalValue } from '../use-external-value';
@@ -62,10 +62,7 @@ export function DictInputItem<Value>(props: DictInputItemProps<Value>) {
       ? externalValueFromDict
       : defaultInitialValue;
 
-  const externalValueOption = useMemo(
-    () => intoOption(externalValue),
-    [externalValue],
-  );
+  const externalValueOption = intoOption(externalValue);
 
   if (!fragment) {
     return null;
