@@ -114,7 +114,7 @@ describe('getFinalState', () => {
           B: item2,
         },
       );
-      setComposer(keyFragment$.getValue().ok(), getAtomicValueComposer());
+      setComposer(keyFragment$.getValue().unwrap(), getAtomicValueComposer());
       setComposer(item1, getAtomicValueComposer());
       setComposer(item2, getAtomicValueComposer());
       setComposer(fragment, createTaggedValueComposer(keyFragment$));
@@ -127,7 +127,7 @@ describe('getFinalState', () => {
       state$.fns.loading();
 
       expect(getFinalState(fragment, loadingStateComposer)).toBeSome(true);
-      keyFragment$.getValue().ok().value$.setValue('B');
+      keyFragment$.getValue().unwrap().value$.setValue('B');
 
       expect(getFinalState(fragment, loadingStateComposer)).toEqual(
         some(false),
@@ -161,7 +161,7 @@ describe('getFinalState', () => {
           A: item1,
         },
       );
-      setComposer(keyFragment$.getValue().ok(), getAtomicValueComposer());
+      setComposer(keyFragment$.getValue().unwrap(), getAtomicValueComposer());
       setComposer(item1, getAtomicValueComposer());
       setComposer(fragment, createTaggedValueComposer(keyFragment$));
 
@@ -173,7 +173,7 @@ describe('getFinalState', () => {
       state$.fns.loading();
 
       expect(getFinalState(fragment, loadingStateComposer)).toBeSome(true);
-      keyFragment$.getValue().ok().value$.setValue('B');
+      keyFragment$.getValue().unwrap().value$.setValue('B');
 
       expect(getFinalState(fragment, loadingStateComposer)).toBeNone();
     });
@@ -273,7 +273,7 @@ describe('getFinalState$', () => {
           B: item2,
         },
       );
-      setComposer(keyFragment$.getValue().ok(), getAtomicValueComposer());
+      setComposer(keyFragment$.getValue().unwrap(), getAtomicValueComposer());
       setComposer(item1, getAtomicValueComposer());
       setComposer(item2, getAtomicValueComposer());
       setComposer(fragment, createTaggedValueComposer(keyFragment$));
@@ -288,7 +288,7 @@ describe('getFinalState$', () => {
       expect(getFinalState$(fragment, loadingStateComposer).getValue()).toEqual(
         some(true),
       );
-      keyFragment$.getValue().ok().value$.setValue('B');
+      keyFragment$.getValue().unwrap().value$.setValue('B');
 
       expect(getFinalState$(fragment, loadingStateComposer).getValue()).toEqual(
         some(false),

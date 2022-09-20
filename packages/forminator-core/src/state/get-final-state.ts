@@ -31,21 +31,24 @@ export function _getFinalState<
   { getWireValue, getFragmentValue, getFragmentState }: Getters,
 ): Option<SD['state']> {
   return catchNoneError(() => {
-    const fragmentComposer = getWireValue(fragment.composer$).ok();
+    const fragmentComposer = getWireValue(fragment.composer$).unwrap();
     const value = getWireValue(fragment.value$);
-    const fragments = fragmentComposer.getFragments(intoOption(value).ok(), {
-      get: <IValue, Value>(
-        v: ForminatorFragment<IValue, Value> | ReadonlyWire<Value>,
-      ): Value => {
-        return isForminatorFragment<IValue, Value>(v)
-          ? getFragmentValue(v).ok()
-          : getWireValue(v as ReadonlyWire<Value>);
+    const fragments = fragmentComposer.getFragments(
+      intoOption(value).unwrap(),
+      {
+        get: <IValue, Value>(
+          v: ForminatorFragment<IValue, Value> | ReadonlyWire<Value>,
+        ): Value => {
+          return isForminatorFragment<IValue, Value>(v)
+            ? getFragmentValue(v).unwrap()
+            : getWireValue(v as ReadonlyWire<Value>);
+        },
       },
-    });
+    );
     const state = getExistingState$(fragment, stateComposer, getWireValue).map(
       (stateWire) => getWireValue(stateWire),
     );
-    const states = fragments.map((f) => getFragmentState(f).ok());
+    const states = fragments.map((f) => getFragmentState(f).unwrap());
     return stateComposer.compose(state, states);
   });
 }

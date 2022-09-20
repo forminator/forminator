@@ -29,8 +29,9 @@ export { Option_2 as Option };
 
 export declare interface OptionFns<Value> {
   readonly [FORMINATOR_OPTION]: true;
-  ok(this: Option_2<Value>): Value;
-  or(this: Option_2<Value>, value: Value): Value;
+  unwrap(this: Option_2<Value>): Value;
+  unwrap_or(this: Option_2<Value>, value: Value): Value;
+  or(this: Option_2<Value>, value: Option_2<Value>): Option_2<Value>;
   map<T>(this: Option_2<Value>, fn: (value: Value) => T): Option_2<T>;
   isSome(this: Option_2<Value>): this is Some<Value>;
   isNone(this: Option_2<Value>): this is None<Value>;

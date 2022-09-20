@@ -11,7 +11,7 @@ export const loadingStateComposer: StateComposer<
   StateDefinition<boolean, boolean, LoadingFns, [boolean?]>
 > = {
   compose(state, states) {
-    if (state.or(false)) {
+    if (state.unwrap_or(false)) {
       return true;
     }
     return states.some((loading) => loading);
