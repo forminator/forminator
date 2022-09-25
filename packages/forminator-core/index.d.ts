@@ -21,6 +21,8 @@ declare const FORMINATOR_FRAGMENT: unique symbol;
 export declare interface ForminatorFragment<IValue, EValue> {
   readonly [FORMINATOR_FRAGMENT]: true;
   readonly id: string;
+  initialValue: Option_2<EValue>;
+  externalValue$$: Wire<Option_2<ReadonlyWire<Option_2<EValue>>>>;
   composer$: Wire<Option_2<ValueComposer<IValue, EValue>>>;
   value$: Wire<IValue | undefined>;
   finalValue$$: Wire<Option_2<ReadonlyWire<Option_2<EValue>>>>;

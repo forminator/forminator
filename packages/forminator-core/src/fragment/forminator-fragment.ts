@@ -8,6 +8,8 @@ export const FORMINATOR_FRAGMENT = Symbol('FORMINATOR_FRAGMENT');
 export interface ForminatorFragment<IValue, EValue> {
   readonly [FORMINATOR_FRAGMENT]: true;
   readonly id: string;
+  initialValue: Option<EValue>;
+  externalValue$$: Wire<Option<ReadonlyWire<Option<EValue>>>>;
   composer$: Wire<Option<ValueComposer<IValue, EValue>>>;
   value$: Wire<IValue | undefined>;
   finalValue$$: Wire<Option<ReadonlyWire<Option<EValue>>>>;
