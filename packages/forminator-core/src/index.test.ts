@@ -16,6 +16,7 @@ import {
   intoOption,
   fromOption,
   isOption,
+  createSelectedFragment,
 } from '.';
 
 describe('index', function () {
@@ -37,5 +38,6 @@ describe('index', function () {
     expect(isOption).toBeDefined();
     expect(intoOption).toBeDefined();
     expect(fromOption).toBeDefined();
+    expect(createSelectedFragment).toBeDefined();
   });
 });

@@ -16,6 +16,11 @@ export declare function createFragment<IValue, EValue>(
 
 export declare function createId(prefix?: string): string;
 
+export declare function createSelectedFragment<IValue, EValue, PEValue>(
+  fragment: ForminatorFragment<any, PEValue>,
+  selector$: ReadonlyWire<ValueSelector<PEValue, EValue>>,
+): ForminatorFragment<IValue, EValue>;
+
 declare const FORMINATOR_FRAGMENT: unique symbol;
 
 export declare interface ForminatorFragment<IValue, EValue> {
@@ -134,6 +139,10 @@ export declare interface ValueComposer<IValue, EValue> {
     },
   ): ForminatorFragment<unknown, any>[];
 }
+
+export declare type ValueSelector<PEValue, FEValue> = (
+  value: PEValue,
+) => FEValue;
 
 export declare function waitForFinalState<
   IValue,

@@ -39,3 +39,5 @@ export {
 } from '@forminator/option';
 export type { Option, OptionFns, Some, None } from '@forminator/option';
 export { waitForSomeValue } from './utils/option-wire';
+export type { ValueSelector } from './value_selector/value-selector';
+export { createSelectedFragment } from './external-value/create-selected-fragment';
