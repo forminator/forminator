@@ -1,5 +1,5 @@
 import { createFragment, ForminatorFragment } from '@forminator/core';
-import { fromOption, intoOption } from '@forminator/option';
+import { intoOption } from '@forminator/option';
 import { useWireValue } from '@forminator/react-wire';
 import { ReactNode, useLayoutEffect, useState } from 'react';
 import { ExternalValueContextProvider } from '../contexts/external-value-context';
@@ -23,8 +23,7 @@ export function DictInputItem<Value>(props: DictInputItemProps<Value>) {
   const dictFragment = useFragment<Dict, object>();
   const dictExternalValue = useExternalValue<object>();
 
-  const { value$: dictValue$ } = dictFragment;
-  const dictValue = useWireValue(dictValue$);
+  const dictValue = useWireValue(dictFragment.value$);
   const dispatch = useDictInputDispatchContext();
 
   const [lastFragments] = useState<
@@ -32,7 +31,7 @@ export function DictInputItem<Value>(props: DictInputItemProps<Value>) {
   >(() => new Map());
 
   useLayoutEffect(() => {
-    const dictValue = dictValue$.getValue();
+    const dictValue = dictFragment.value$.getValue();
     const dictFieldFragment = dictValue?.[field];
     const lastFieldFragment = lastFragments.get(field);
 
@@ -43,6 +42,9 @@ export function DictInputItem<Value>(props: DictInputItemProps<Value>) {
     if (!dictFieldFragment) {
       const newFieldFragment = lastFieldFragment ?? createFragment();
       if (newFieldFragment !== lastFieldFragment) {
+        newFieldFragment.initialValue = dictFragment.initialValue
+          .map((value) => selectField(value, field))
+          .or(intoOption(defaultInitialValue));
         lastFragments.set(field, newFieldFragment);
       }
       dispatch(addField(field, newFieldFragment));
@@ -50,20 +52,12 @@ export function DictInputItem<Value>(props: DictInputItemProps<Value>) {
         !keep && dispatch(removeField(field));
       };
     }
-  }, [lastFragments, dictValue$, dispatch, field, keep]);
+  }, [lastFragments, dictFragment, dispatch, field, keep, defaultInitialValue]);
 
   const fragment = dictValue?.[field];
-  const externalValueFromDict = selectField(
-    fromOption(dictExternalValue),
-    field,
+  const externalValueOption = dictExternalValue.map((value) =>
+    selectField(value, field),
   );
-  const externalValue =
-    externalValueFromDict !== undefined
-      ? externalValueFromDict
-      : defaultInitialValue;
-
-  const externalValueOption = intoOption(externalValue);
-
   if (!fragment) {
     return null;
   }
