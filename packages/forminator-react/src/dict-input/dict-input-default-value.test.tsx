@@ -1,4 +1,4 @@
-import { createFragment, getFinalValue } from '@forminator/core';
+import { createFragment, getFinalValue, some } from '@forminator/core';
 import { render, screen } from '@testing-library/react';
 import React, { StrictMode } from 'react';
 import { Forminator } from '../forminator';
@@ -93,6 +93,29 @@ describe('dict input default values', function () {
     );
     expect(getFinalValue(rootFragment)).toEqualSome({ fieldA: 'on form' });
     expect(screen.getByTestId('input')).toHaveValue('on form');
+  });
+  it('should use default value on fragment initial value when presented and ignore form and input and dict input item default value', function () {
+    const rootFragment = createFragment<unknown, { fieldA: string }>();
+    rootFragment.initialValue = some({ fieldA: 'on fragment' });
+    render(
+      <StrictMode>
+        <Forminator
+          rootFragment={rootFragment}
+          externalValue={{ fieldA: 'on form' }}
+        >
+          <DictInput>
+            <DictInputItem
+              field={'fieldA'}
+              defaultInitialValue="on dict input item"
+            >
+              <StringInput data-testid="input" defaultValue="on input" />
+            </DictInputItem>
+          </DictInput>
+        </Forminator>
+      </StrictMode>,
+    );
+    expect(getFinalValue(rootFragment)).toEqualSome({ fieldA: 'on fragment' });
+    expect(screen.getByTestId('input')).toHaveValue('on fragment');
   });
 
   it('should use default value on form when presented for deep fields', function () {

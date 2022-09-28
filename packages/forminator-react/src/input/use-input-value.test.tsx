@@ -1,4 +1,4 @@
-import { createFragment, getFinalValue } from '@forminator/core';
+import { createFragment, getFinalValue, some } from '@forminator/core';
 import { useWireValue } from '@forminator/react-wire';
 import { renderHook } from '@forminator/test-render-hook';
 import { render, screen } from '@testing-library/react';
@@ -32,7 +32,29 @@ export function StringInput(
 }
 
 describe('use input value wire', function () {
-  it('should respect external value if presented', function () {
+  it('should respect fragment initial value if presented', function () {
+    const fragment = createFragment();
+    fragment.initialValue = some('fragment');
+    const wrapper = (props: { children?: ReactNode }) => {
+      const { children } = props;
+      return (
+        <Forminator rootFragment={fragment} externalValue={'external'}>
+          {children}
+        </Forminator>
+      );
+    };
+    const { result } = renderHook(
+      () => {
+        const fragment = useFragment();
+        const value$ = useInputValue$<string>('initial');
+        return { value$, fragment };
+      },
+      { wrapper },
+    );
+    expect(result.current.value$.getValue()).toBe('fragment');
+    expect(getFinalValue(result.current.fragment!)).toBeSome('fragment');
+  });
+  it('should respect external initial value if presented', function () {
     const wrapper = (props: { children?: ReactNode }) => {
       const { children } = props;
       return <Forminator externalValue={'external'}>{children}</Forminator>;

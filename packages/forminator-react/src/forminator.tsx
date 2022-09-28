@@ -13,12 +13,27 @@ export interface ForminatorProps<IValue, EValue> {
   children?: ReactNode | undefined;
 }
 
+function createRootFragment<IValue, EValue>(
+  rootFragment?: ForminatorFragment<IValue, EValue>,
+  externalValue?: EValue,
+) {
+  if (rootFragment) {
+    if (rootFragment.initialValue.isNone()) {
+      rootFragment.initialValue = intoOption(externalValue);
+    }
+    return rootFragment;
+  }
+  const fragment = createFragment<IValue, EValue>(undefined);
+  fragment.initialValue = intoOption(externalValue);
+  return fragment;
+}
+
 export function Forminator<IValue, EValue>(
   props: ForminatorProps<IValue, EValue>,
 ) {
   const { externalValue, children } = props;
-  const [rootFragment] = useState(
-    () => props.rootFragment ?? createFragment<IValue, EValue>(undefined),
+  const [rootFragment] = useState(() =>
+    createRootFragment(props.rootFragment, props.externalValue),
   );
   const externalValueOption = intoOption(externalValue);
 

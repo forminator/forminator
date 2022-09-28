@@ -10,6 +10,7 @@ export function createFragment<IValue, EValue>(
   return {
     [FORMINATOR_FRAGMENT]: true,
     id: createId('fragment-'),
+    initialValue: none(),
     composer$: createWire<Option<ValueComposer<IValue, EValue>>>(none()),
     value$: createWire(initialValue),
     finalValue$$: createWire<Option<ReadonlyWire<Option<EValue>>>>(none()),

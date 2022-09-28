@@ -1,9 +1,8 @@
 import { useWire, Wire } from '@forminator/react-wire';
 import { useComposer } from '../use-composer';
-import { useExternalValue } from '../use-external-value';
 import { useFragment } from '../use-fragment';
 
-import { fromOption, ValueComposer } from '@forminator/core';
+import { fromOption, intoOption, ValueComposer } from '@forminator/core';
 
 export function createInputValueComposer<Value>(): ValueComposer<Value, Value> {
   return {
@@ -27,11 +26,10 @@ export function useInputValue$<Value>(
   defaultInitialValue?: Value,
 ): Wire<Value | undefined> | Wire<Value> {
   const fragment = useFragment<Value, Value>();
-  const externalValue = fromOption(useExternalValue<Value>());
-  const value$ = useWire(
-    fragment.value$,
-    externalValue === undefined ? defaultInitialValue : externalValue,
+  const initialValue = fragment.initialValue.or(
+    intoOption(defaultInitialValue),
   );
+  const value$ = useWire(fragment.value$, fromOption(initialValue));
   useComposer(getInputValueComposer<Value>());
 
   return value$;
