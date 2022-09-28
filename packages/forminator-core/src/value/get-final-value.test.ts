@@ -133,7 +133,7 @@ describe('getFinalValue$', () => {
     });
     const finalValue$ = getFinalValue$(fragment);
 
-    setComposer(keyFragment$.getValue().ok(), getAtomicValueComposer());
+    setComposer(keyFragment$.getValue().unwrap(), getAtomicValueComposer());
     setComposer(item1, getAtomicValueComposer());
     setComposer(item2, getAtomicValueComposer());
     setComposer(fragment, createTaggedValueComposer(keyFragment$));
@@ -143,7 +143,7 @@ describe('getFinalValue$', () => {
     const fn = jest.fn();
     finalValue$.subscribe(fn);
 
-    keyFragment$.getValue().ok().value$.setValue('B');
+    keyFragment$.getValue().unwrap().value$.setValue('B');
     expect(finalValue$.getValue()).toBeSome(2);
     expect(fn).toBeCalledWith(some(2));
   });
@@ -156,7 +156,7 @@ describe('getFinalValue$', () => {
     });
     const finalValue$ = getFinalValue$(fragment);
 
-    setComposer(keyFragment$.getValue().ok(), getAtomicValueComposer());
+    setComposer(keyFragment$.getValue().unwrap(), getAtomicValueComposer());
     setComposer(item1, getAtomicValueComposer());
     setComposer(fragment, createTaggedValueComposer(keyFragment$));
 
@@ -165,7 +165,7 @@ describe('getFinalValue$', () => {
     const fn = jest.fn();
     finalValue$.subscribe(fn);
 
-    keyFragment$.getValue().ok().value$.setValue('B');
+    keyFragment$.getValue().unwrap().value$.setValue('B');
     expect(finalValue$.getValue()).toBeNone();
     expect(fn).toBeCalledWith(none());
   });

@@ -14,9 +14,11 @@ export type Option<Value> = Some<Value> | None<Value>;
 export interface OptionFns<Value> {
   readonly [FORMINATOR_OPTION]: true;
 
-  ok(this: Option<Value>): Value;
+  unwrap(this: Option<Value>): Value;
 
-  or(this: Option<Value>, value: Value): Value;
+  unwrap_or(this: Option<Value>, value: Value): Value;
+
+  or(this: Option<Value>, value: Option<Value>): Option<Value>;
 
   map<T>(this: Option<Value>, fn: (value: Value) => T): Option<T>;
 
@@ -28,10 +30,13 @@ export interface OptionFns<Value> {
 function getOptionFns<Value>(): OptionFns<Value> {
   return {
     [FORMINATOR_OPTION]: true,
-    ok() {
-      return ok(this);
+    unwrap() {
+      return unwrap(this);
     },
-    or(this: Option<Value>, value: Value) {
+    unwrap_or(value: Value): Value {
+      return unwrap_or(this, value);
+    },
+    or(this: Option<Value>, value: Option<Value>) {
       return or(this, value);
     },
     map<T>(this: Option<Value>, fn: (value: Value) => T) {
@@ -101,16 +106,23 @@ export class NoneError extends Error {
   }
 }
 
-function ok<Value>(option: Option<Value>): Value {
+function unwrap<Value>(option: Option<Value>): Value {
   if (isSome(option)) {
     return option.value;
   }
   throwNoneError();
 }
 
-function or<Value>(option: Option<Value>, value: Value): Value {
+function unwrap_or<Value>(option: Option<Value>, value: Value): Value {
   if (isSome(option)) {
     return option.value;
+  }
+  return value;
+}
+
+function or<Value>(option: Option<Value>, value: Option<Value>): Option<Value> {
+  if (isSome(option)) {
+    return option;
   }
   return value;
 }

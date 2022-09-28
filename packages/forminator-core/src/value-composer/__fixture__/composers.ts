@@ -51,7 +51,7 @@ export function createTaggedValueComposer<Key extends string, Value>(
 ): ValueComposer<TaggedFragmentValue<Key, Value>, Value> {
   return {
     compose(value, { get }) {
-      const key = get(get(fragment$).ok());
+      const key = get(get(fragment$).unwrap());
       const fragment = value[key];
       if (!fragment) {
         throwNoneError();
@@ -59,7 +59,7 @@ export function createTaggedValueComposer<Key extends string, Value>(
       return get(fragment);
     },
     getFragments(value, { get }) {
-      const key = get(get(fragment$).ok());
+      const key = get(get(fragment$).unwrap());
       const fragment = value[key];
       if (!fragment) {
         throwNoneError();

@@ -13,7 +13,7 @@ export const printReceivedSome = (
 ) => {
   const { RECEIVED_COLOR } = self.utils;
   return `${RECEIVED_COLOR(
-    `some(${self.utils.printReceived(received.ok())})`,
+    `some(${self.utils.printReceived(received.unwrap())})`,
   )}`;
 };
 export const printExpectedNone = (self: jest.MatcherContext) => {
@@ -26,7 +26,7 @@ export const printExpectedSome = (
 ) => {
   const { EXPECTED_COLOR } = self.utils;
   return `${EXPECTED_COLOR(
-    `some(${self.utils.printExpected(expected.ok())})`,
+    `some(${self.utils.printExpected(expected.unwrap())})`,
   )}`;
 };
 export const printReceivedOption = (

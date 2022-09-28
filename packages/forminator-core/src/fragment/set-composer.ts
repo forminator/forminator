@@ -9,7 +9,7 @@ export function setComposer<IValue, EValue>(
   const fragmentComposer = fragment.composer$.getValue();
   if (
     fragmentComposer.isNone() ||
-    (fragmentComposer.isSome() && fragmentComposer.ok() !== composer)
+    (fragmentComposer.isSome() && fragmentComposer.unwrap() !== composer)
   ) {
     fragment.composer$.setValue(some(composer));
   }

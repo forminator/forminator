@@ -33,22 +33,30 @@ describe('option', () => {
       expect(none()).toBe(none());
     });
   });
-  describe('ok', () => {
+  describe('unwrap', () => {
     it('should return value of some', () => {
-      expect(some(5).ok()).toBe(5);
+      expect(some(5).unwrap()).toBe(5);
     });
     it('should throw when get none', () => {
-      expect(() => none().ok()).toThrow(NoneError);
+      expect(() => none().unwrap()).toThrow(NoneError);
+    });
+  });
+  describe('unwrap_or', function () {
+    it('should return value of some', function () {
+      expect(some(5 as number).unwrap_or(10)).toBe(5);
+    });
+    it('should return default value for none', function () {
+      expect(none().unwrap_or(10)).toBe(10);
     });
   });
   describe('catchNoneError', () => {
     const doubleX = (o: Option<{ x: number }>) =>
-      catchNoneError(() => o.ok().x * 2);
+      catchNoneError(() => o.unwrap().x * 2);
     it('should return the returned value', () => {
-      expect(doubleX(some({ x: 5 }))).toEqual(some(10));
+      expect(doubleX(some({ x: 5 }))).toBe(some(10));
     });
     it('should return none when NoneError throw', () => {
-      expect(doubleX(none())).toEqual(none());
+      expect(doubleX(none())).toBe(none());
     });
     it('should re-throw other errors', () => {
       // @ts-expect-error
@@ -61,10 +69,10 @@ describe('option', () => {
   describe('map', () => {
     const double = (o: Option<number>) => o.map((v) => v * 2);
     it('should map some', () => {
-      expect(double(some(5))).toEqual(some(10));
+      expect(double(some(5))).toBe(some(10));
     });
     it('should map none', () => {
-      expect(double(none())).toEqual(none());
+      expect(double(none())).toBe(none());
     });
     it('should returns none if function returns undefined', function () {
       expect(some(5).map((n) => undefined)).toBe(none());
@@ -72,10 +80,13 @@ describe('option', () => {
   });
   describe('or', function () {
     it('should returns some value', function () {
-      expect(some(5 as number).or(10)).toEqual(5);
+      expect(some(5 as number).or(some(10))).toBe(some(5));
     });
     it('should returns default value for none', function () {
-      expect(none().or(10)).toEqual(10);
+      expect(none().or(some(10))).toBe(some(10));
+    });
+    it('should returns none when default value is none', function () {
+      expect(none().or(none())).toBe(none());
     });
   });
 });
@@ -121,13 +132,13 @@ describe('isOption', function () {
 
 describe('intoOption', function () {
   it('should return some when value is defined', function () {
-    expect(intoOption(5)).toEqual(some(5));
+    expect(intoOption(5)).toBe(some(5));
   });
   it('should return some when value is null', function () {
-    expect(intoOption(null)).toEqual(some(null));
+    expect(intoOption(null)).toBe(some(null));
   });
   it('should return none when value is undefined', function () {
-    expect(intoOption(undefined)).toEqual(none());
+    expect(intoOption(undefined)).toBe(none());
   });
 });
 

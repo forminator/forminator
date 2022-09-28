@@ -17,7 +17,7 @@ export function getState$<
 ): StateWire<SD> {
   const state$Option = getExistingState$(fragment, stateComposer);
   if (state$Option.isSome()) {
-    return state$Option.ok();
+    return state$Option.unwrap();
   }
   return createAndStoreState$(fragment, stateComposer, ...args);
 }

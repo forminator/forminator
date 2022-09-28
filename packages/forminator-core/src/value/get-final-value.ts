@@ -18,15 +18,15 @@ export function _getFinalValue<IValue, EValue>(
   { getWireValue, getFragmentValue }: Getters,
 ): Option<EValue> {
   return catchNoneError(() => {
-    const composer = getWireValue(fragment.composer$).ok();
+    const composer = getWireValue(fragment.composer$).unwrap();
     const value = getWireValue(fragment.value$);
 
-    return composer.compose(intoOption(value).ok(), {
+    return composer.compose(intoOption(value).unwrap(), {
       get: <IValue, Value>(
         v: ForminatorFragment<IValue, Value> | ReadonlyWire<Value>,
       ): Value => {
         return isForminatorFragment<IValue, Value>(v)
-          ? getFragmentValue(v).ok()
+          ? getFragmentValue(v).unwrap()
           : getWireValue(v as ReadonlyWire<Value>);
       },
     });
