@@ -1,7 +1,14 @@
 import {
+  addItem,
+  ArrayInput,
+  ArrayOutput,
   DictInput,
   DictInputItem,
   Forminator,
+  moveItem,
+  removeItem,
+  useArrayIndexContext,
+  useArrayInputDispatchContext,
   useComposer,
   useExternalValue,
   useFragment,
@@ -19,5 +26,12 @@ describe('index', function () {
     expect(useInputValue$).toBeDefined();
     expect(DictInput).toBeDefined();
     expect(DictInputItem).toBeDefined();
+    expect(useArrayIndexContext).toBeDefined();
+    expect(useArrayInputDispatchContext).toBeDefined();
+    expect(ArrayInput).toBeDefined();
+    expect(ArrayOutput).toBeDefined();
+    expect(addItem).toBeDefined();
+    expect(removeItem).toBeDefined();
+    expect(moveItem).toBeDefined();
   });
 });
