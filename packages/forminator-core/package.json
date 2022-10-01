@@ -32,7 +32,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
-    "@forminator/jest-option": "*",
+    "@forminator/jest-option": "workspace:*",
     "@microsoft/api-extractor": "^7",
     "@types/jest": "^28",
     "@types/node": "^18",
@@ -57,7 +57,7 @@
     "react-dom": "^17"
   },
   "dependencies": {
-    "@forminator/option": "*",
+    "@forminator/option": "workspace:*",
     "@forminator/react-wire": "^0.6"
   }
 }

@@ -20,8 +20,8 @@ importers:
 
   packages/forminator-core:
     specifiers:
-      '@forminator/jest-option': '*'
-      '@forminator/option': '*'
+      '@forminator/jest-option': workspace:*
+      '@forminator/option': workspace:*
       '@forminator/react-wire': ^0.6
       '@microsoft/api-extractor': ^7
       '@types/jest': ^28
@@ -67,7 +67,7 @@ importers:
 
   packages/forminator-jest-option:
     specifiers:
-      '@forminator/option': '*'
+      '@forminator/option': workspace:*
       '@microsoft/api-extractor': ^7
       '@types/jest': ^28
       '@types/node': ^18
@@ -128,11 +128,11 @@ importers:
 
   packages/forminator-react:
     specifiers:
-      '@forminator/core': '*'
-      '@forminator/jest-option': '*'
-      '@forminator/option': '*'
+      '@forminator/core': workspace:*
+      '@forminator/jest-option': workspace:*
+      '@forminator/option': workspace:*
       '@forminator/react-wire': ^0.6
-      '@forminator/test-render-hook': '*'
+      '@forminator/test-render-hook': workspace:*
       '@microsoft/api-extractor': ^7
       '@testing-library/dom': ^8
       '@testing-library/jest-dom': ^5

@@ -32,8 +32,8 @@
     "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
-    "@forminator/jest-option": "*",
-    "@forminator/test-render-hook": "*",
+    "@forminator/jest-option": "workspace:*",
+    "@forminator/test-render-hook": "workspace:*",
     "@microsoft/api-extractor": "^7",
     "@testing-library/dom": "^8",
     "@testing-library/jest-dom": "^5",
@@ -64,8 +64,8 @@
     "react-dom": "^18"
   },
   "dependencies": {
-    "@forminator/core": "*",
-    "@forminator/option": "*",
+    "@forminator/core": "workspace:*",
+    "@forminator/option": "workspace:*",
     "@forminator/react-wire": "^0.6",
     "lodash": "^4"
   }

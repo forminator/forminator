@@ -46,6 +46,6 @@
     "vite-plugin-dts": "^1"
   },
   "dependencies": {
-    "@forminator/option": "*"
+    "@forminator/option": "workspace:*"
   }
 }
