@@ -1,5 +1,11 @@
 # @forminator/react
 
+## 0.1.2
+
+### Patch Changes
+
+- 66e91bd: export fragment and external value context provider, export dict dispatch and actions
+
 ## 0.1.1
 
 ### Patch Changes
