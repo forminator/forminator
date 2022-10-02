@@ -1,11 +1,27 @@
 import { Dispatch } from 'react';
 import { ForminatorFragment } from '@forminator/core';
 import { Option as Option_2 } from '@forminator/core';
+import { PropsWithChildren } from 'react';
 import { ReactNode } from 'react';
 import { ValueComposer } from '@forminator/core';
 import { Wire } from '@forminator/react-wire';
 
+declare const ADD_FIELD = 'ADD_FIELD';
+
 declare const ADD_ITEM = 'ADD_ITEM';
+
+export declare function addField(
+  field: string,
+  fragment: ForminatorFragment<unknown, unknown>,
+): DictInputActionTypes;
+
+declare interface AddFieldAction {
+  type: typeof ADD_FIELD;
+  payload: {
+    field: string;
+    fragment: ForminatorFragment<unknown, unknown>;
+  };
+}
 
 export declare function addItem(
   index: number,
@@ -46,6 +62,10 @@ export declare interface ArrayOutputProps {
 
 export declare function DictInput(props: DictInputProps): JSX.Element;
 
+declare type DictInputActionTypes = AddFieldAction | RemoveFieldAction;
+
+declare type DictInputDispatchContextType = Dispatch<DictInputActionTypes>;
+
 export declare function DictInputItem<Value>(
   props: DictInputItemProps<Value>,
 ): JSX.Element | null;
@@ -61,6 +81,20 @@ export declare interface DictInputProps {
   children?: ReactNode;
 }
 
+export declare function ExternalValueContextProvider<EValue>(
+  props: ExternalValueContextProviderProps<EValue>,
+): JSX.Element;
+
+declare interface ExternalValueContextProviderOwnProps<EValue> {
+  value: ExternalValueContextType<EValue>;
+}
+
+declare type ExternalValueContextProviderProps<EValue> = PropsWithChildren<
+  ExternalValueContextProviderOwnProps<EValue>
+>;
+
+declare type ExternalValueContextType<EValue> = Option_2<EValue>;
+
 export declare function Forminator<IValue, EValue>(
   props: ForminatorProps<IValue, EValue>,
 ): JSX.Element;
@@ -70,6 +104,23 @@ export declare interface ForminatorProps<IValue, EValue> {
   rootFragment?: ForminatorFragment<IValue, EValue>;
   children?: ReactNode | undefined;
 }
+
+export declare function FragmentContextProvider<IValue, EValue>(
+  props: FragmentContextProviderProps<IValue, EValue>,
+): JSX.Element;
+
+declare interface FragmentContextProviderOwnProps<IValue, EValue> {
+  value: FragmentContextType<IValue, EValue>;
+}
+
+declare type FragmentContextProviderProps<IValue, EValue> = PropsWithChildren<
+  FragmentContextProviderOwnProps<IValue, EValue>
+>;
+
+declare type FragmentContextType<IValue, EValue> = ForminatorFragment<
+  IValue,
+  EValue
+>;
 
 declare const MOVE_ITEM = 'MOVE_ITEM';
 
@@ -86,7 +137,18 @@ declare interface MoveItemAction {
   };
 }
 
+declare const REMOVE_FIELD = 'REMOVE_FIELD';
+
 declare const REMOVE_ITEM = 'REMOVE_ITEM';
+
+export declare function removeField(field: string): DictInputActionTypes;
+
+declare interface RemoveFieldAction {
+  type: typeof REMOVE_FIELD;
+  payload: {
+    field: string;
+  };
+}
 
 export declare function removeItem(index: number): ArrayInputActionTypes;
 
@@ -104,6 +166,8 @@ export declare function useArrayInputDispatchContext(): ArrayInputDispatchContex
 export declare function useComposer<IValue, EValue>(
   composer: ValueComposer<IValue, EValue>,
 ): void;
+
+export declare function useDictInputDispatchContext(): DictInputDispatchContextType;
 
 export declare function useExternalValue<Value>(): Option_2<Value>;
 
