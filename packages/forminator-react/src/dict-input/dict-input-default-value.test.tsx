@@ -1,5 +1,5 @@
 import { createFragment, getFinalValue, some } from '@forminator/core';
-import { Defined } from '@forminator/option';
+import { Defined } from '@forminator/core';
 import { render, screen } from '@testing-library/react';
 import React, { StrictMode } from 'react';
 import { Forminator } from '../forminator';

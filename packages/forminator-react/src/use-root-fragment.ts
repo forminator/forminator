@@ -1,5 +1,5 @@
 import { createFragment, ForminatorFragment } from '@forminator/core';
-import { Defined } from '@forminator/option';
+import { Defined } from '@forminator/core';
 import { useState } from 'react';
 
 export function useRootFragment<

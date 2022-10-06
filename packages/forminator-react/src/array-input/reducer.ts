@@ -1,5 +1,5 @@
 import { ForminatorFragment } from '@forminator/core';
-import { Defined } from '@forminator/option';
+import { Defined } from '@forminator/core';
 import { ArrayFragment } from './types';
 import * as utils from './value-utils';
 

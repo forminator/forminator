@@ -65,7 +65,6 @@
   },
   "dependencies": {
     "@forminator/core": "workspace:*",
-    "@forminator/option": "workspace:*",
     "@forminator/react-wire": "^0.6",
     "lodash": "^4"
   }

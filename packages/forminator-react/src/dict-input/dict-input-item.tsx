@@ -1,5 +1,5 @@
 import { createFragment, ForminatorFragment } from '@forminator/core';
-import { Defined, intoOption } from '@forminator/option';
+import { Defined, intoOption } from '@forminator/core';
 import { useWireValue } from '@forminator/react-wire';
 import { ReactNode, useLayoutEffect, useState } from 'react';
 import { ExternalValueContextProvider } from '../contexts/external-value-context';
