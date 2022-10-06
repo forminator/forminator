@@ -3,17 +3,23 @@ import {
   ForminatorFragment,
   isForminatorFragment,
 } from '../fragment/forminator-fragment';
-import { catchNoneError, intoOption, Option, some } from '@forminator/option';
+import {
+  catchNoneError,
+  Defined,
+  intoOption,
+  Option,
+  some,
+} from '@forminator/option';
 import { waitForSomeValue } from '../utils/option-wire';
 
 type Getters = {
   getWireValue: <Value>(wire: ReadonlyWire<Value>) => Value;
-  getFragmentValue: <IValue, EValue>(
+  getFragmentValue: <IValue extends Defined, EValue extends Defined>(
     fragment: ForminatorFragment<IValue, EValue>,
   ) => Option<EValue>;
 };
 
-export function _getFinalValue<IValue, EValue>(
+export function _getFinalValue<IValue extends Defined, EValue extends Defined>(
   fragment: ForminatorFragment<IValue, EValue>,
   { getWireValue, getFragmentValue }: Getters,
 ): Option<EValue> {
@@ -22,10 +28,10 @@ export function _getFinalValue<IValue, EValue>(
     const value = getWireValue(fragment.value$);
 
     return composer.compose(intoOption(value).unwrap(), {
-      get: <IValue, Value>(
-        v: ForminatorFragment<IValue, Value> | ReadonlyWire<Value>,
+      get: <Value>(
+        v: ForminatorFragment<any, Value & Defined> | ReadonlyWire<Value>,
       ): Value => {
-        return isForminatorFragment<IValue, Value>(v)
+        return isForminatorFragment<any, Value & Defined>(v)
           ? getFragmentValue(v).unwrap()
           : getWireValue(v as ReadonlyWire<Value>);
       },
@@ -33,7 +39,7 @@ export function _getFinalValue<IValue, EValue>(
   });
 }
 
-export function getFinalValue<IValue, EValue>(
+export function getFinalValue<IValue extends Defined, EValue extends Defined>(
   fragment: ForminatorFragment<IValue, EValue>,
 ): Option<EValue> {
   return _getFinalValue(fragment, {
@@ -42,7 +48,7 @@ export function getFinalValue<IValue, EValue>(
   });
 }
 
-function createFinalValue$<IValue, EValue>(
+function createFinalValue$<IValue extends Defined, EValue extends Defined>(
   fragment: ForminatorFragment<IValue, EValue>,
 ) {
   return createSelector<Option<EValue>>({
@@ -55,7 +61,7 @@ function createFinalValue$<IValue, EValue>(
   });
 }
 
-export function getFinalValue$<IValue, EValue>(
+export function getFinalValue$<IValue extends Defined, EValue extends Defined>(
   fragment: ForminatorFragment<IValue, EValue>,
 ): ReadonlyWire<Option<EValue>> {
   const finalValue$Option = fragment.finalValue$$.getValue();
@@ -67,8 +73,9 @@ export function getFinalValue$<IValue, EValue>(
   return finalValue$;
 }
 
-export function waitForFinalValue<IValue, EValue>(
-  fragment: ForminatorFragment<IValue, EValue>,
-): Promise<EValue> {
+export function waitForFinalValue<
+  IValue extends Defined,
+  EValue extends Defined,
+>(fragment: ForminatorFragment<IValue, EValue>): Promise<EValue> {
   return waitForSomeValue(getFinalValue$(fragment));
 }

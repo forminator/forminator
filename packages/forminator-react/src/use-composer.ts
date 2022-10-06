@@ -1,8 +1,9 @@
 import { setComposer, ValueComposer } from '@forminator/core';
+import { Defined } from '@forminator/option';
 import { useLayoutEffect } from 'react';
 import { useFragment } from './use-fragment';
 
-export function useComposer<IValue, EValue>(
+export function useComposer<IValue extends Defined, EValue extends Defined>(
   composer: ValueComposer<IValue, EValue>,
 ) {
   const fragment = useFragment<IValue, EValue>();

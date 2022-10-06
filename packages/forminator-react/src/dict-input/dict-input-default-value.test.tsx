@@ -1,4 +1,5 @@
 import { createFragment, getFinalValue, some } from '@forminator/core';
+import { Defined } from '@forminator/option';
 import { render, screen } from '@testing-library/react';
 import React, { StrictMode } from 'react';
 import { Forminator } from '../forminator';
@@ -95,7 +96,7 @@ describe('dict input default values', function () {
     expect(screen.getByTestId('input')).toHaveValue('on form');
   });
   it('should use default value on fragment initial value when presented and ignore form and input and dict input item default value', function () {
-    const rootFragment = createFragment<unknown, { fieldA: string }>();
+    const rootFragment = createFragment<Defined, { fieldA: string }>();
     rootFragment.initialValue = some({ fieldA: 'on fragment' });
     render(
       <StrictMode>

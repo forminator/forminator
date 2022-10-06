@@ -1,5 +1,5 @@
 import { createFragment, ForminatorFragment } from '@forminator/core';
-import { intoOption } from '@forminator/option';
+import { Defined, intoOption } from '@forminator/option';
 import { useWireValue } from '@forminator/react-wire';
 import { ReactNode, useLayoutEffect, useState } from 'react';
 import { ExternalValueContextProvider } from '../contexts/external-value-context';
@@ -27,7 +27,7 @@ export function DictInputItem<Value>(props: DictInputItemProps<Value>) {
   const dispatch = useDictInputDispatchContext();
 
   const [lastFragments] = useState<
-    Map<string, ForminatorFragment<unknown, unknown>>
+    Map<string, ForminatorFragment<Defined, Defined>>
   >(() => new Map());
 
   useLayoutEffect(() => {

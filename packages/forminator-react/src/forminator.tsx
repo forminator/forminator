@@ -3,17 +3,21 @@ import {
   ForminatorFragment,
   intoOption,
 } from '@forminator/core';
+import { Defined } from '@forminator/option';
 import React, { ReactNode, useState } from 'react';
 import { ExternalValueContextProvider } from './contexts/external-value-context';
 import { FragmentContextProvider } from './contexts/fragment-context';
 
-export interface ForminatorProps<IValue, EValue> {
+export interface ForminatorProps<
+  IValue extends Defined,
+  EValue extends Defined,
+> {
   externalValue?: EValue;
   rootFragment?: ForminatorFragment<IValue, EValue>;
   children?: ReactNode | undefined;
 }
 
-function createRootFragment<IValue, EValue>(
+function createRootFragment<IValue extends Defined, EValue extends Defined>(
   rootFragment?: ForminatorFragment<IValue, EValue>,
   externalValue?: EValue,
 ) {
@@ -28,7 +32,7 @@ function createRootFragment<IValue, EValue>(
   return fragment;
 }
 
-export function Forminator<IValue, EValue>(
+export function Forminator<IValue extends Defined, EValue extends Defined>(
   props: ForminatorProps<IValue, EValue>,
 ) {
   const { externalValue, children } = props;

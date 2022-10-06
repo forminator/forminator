@@ -1,4 +1,5 @@
 import { ForminatorFragment } from '@forminator/core';
+import { Defined } from '@forminator/option';
 import { Dict } from './types';
 
 export const ADD_FIELD = 'ADD_FIELD';
@@ -8,7 +9,7 @@ export interface AddFieldAction {
   type: typeof ADD_FIELD;
   payload: {
     field: string;
-    fragment: ForminatorFragment<unknown, unknown>;
+    fragment: ForminatorFragment<Defined, Defined>;
   };
 }
 
@@ -23,7 +24,7 @@ export type DictInputActionTypes = AddFieldAction | RemoveFieldAction;
 
 export function addField(
   field: string,
-  fragment: ForminatorFragment<unknown, unknown>,
+  fragment: ForminatorFragment<Defined, Defined>,
 ): DictInputActionTypes {
   return {
     type: ADD_FIELD,
