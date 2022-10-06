@@ -130,7 +130,6 @@ importers:
     specifiers:
       '@forminator/core': workspace:*
       '@forminator/jest-option': workspace:*
-      '@forminator/option': workspace:*
       '@forminator/react-wire': ^0.6
       '@forminator/test-render-hook': workspace:*
       '@microsoft/api-extractor': ^7
@@ -160,7 +159,6 @@ importers:
       vite-plugin-dts: ^1
     dependencies:
       '@forminator/core': link:../forminator-core
-      '@forminator/option': link:../forminator-option
       '@forminator/react-wire': 0.6.0_react@18.2.0
       lodash: 4.17.21
     devDependencies:

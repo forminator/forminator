@@ -4,7 +4,7 @@ import {
   getFinalValue,
   some,
 } from '@forminator/core';
-import { Defined } from '@forminator/option';
+import { Defined } from '@forminator/core';
 import { suppressErrorOutput } from '@forminator/test-render-hook';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';

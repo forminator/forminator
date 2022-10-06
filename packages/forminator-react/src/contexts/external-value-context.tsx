@@ -1,4 +1,4 @@
-import { Defined } from '@forminator/option';
+import { Defined } from '@forminator/core';
 import React, { createContext, PropsWithChildren, useContext } from 'react';
 import { Option } from '@forminator/core';
 

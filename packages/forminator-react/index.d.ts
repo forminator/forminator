@@ -1,4 +1,4 @@
-import { Defined } from '@forminator/option';
+import { Defined } from '@forminator/core';
 import { Dispatch } from 'react';
 import { ForminatorFragment } from '@forminator/core';
 import { Option as Option_2 } from '@forminator/core';

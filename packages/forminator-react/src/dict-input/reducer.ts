@@ -1,5 +1,5 @@
 import { ForminatorFragment } from '@forminator/core';
-import { Defined } from '@forminator/option';
+import { Defined } from '@forminator/core';
 import { Dict } from './types';
 
 export const ADD_FIELD = 'ADD_FIELD';

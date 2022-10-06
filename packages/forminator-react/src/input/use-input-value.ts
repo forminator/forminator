@@ -3,7 +3,7 @@ import { useComposer } from '../use-composer';
 import { useFragment } from '../use-fragment';
 
 import { fromOption, intoOption, ValueComposer } from '@forminator/core';
-import { Defined } from '@forminator/option';
+import { Defined } from '@forminator/core';
 
 export function createInputValueComposer<Value>(): ValueComposer<Value, Value> {
   return {

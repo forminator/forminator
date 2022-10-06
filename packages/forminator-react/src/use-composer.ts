@@ -1,5 +1,5 @@
 import { setComposer, ValueComposer } from '@forminator/core';
-import { Defined } from '@forminator/option';
+import { Defined } from '@forminator/core';
 import { useLayoutEffect } from 'react';
 import { useFragment } from './use-fragment';
 

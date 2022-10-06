@@ -36,6 +36,7 @@ export {
   intoOption,
   fromOption,
   isOption,
+  type Defined,
 } from '@forminator/option';
 export type { Option, OptionFns, Some, None } from '@forminator/option';
 export { waitForSomeValue } from './utils/option-wire';

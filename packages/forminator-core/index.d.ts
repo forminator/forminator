@@ -18,6 +18,8 @@ export declare function createFragment<
 
 export declare function createId(prefix?: string): string;
 
+export { Defined };
+
 declare const FORMINATOR_FRAGMENT: unique symbol;
 
 export declare interface ForminatorFragment<
