@@ -1,17 +1,17 @@
 import { FirmMap } from './firm-map';
 
 export const FORMINATOR_OPTION = Symbol('FORMINATOR_OPTION');
-
-export type Some<Value> = {
+export type Defined = {} | null;
+export type Some<Value extends Defined> = {
   some: true;
   value: Value;
 } & OptionFns<Value>;
-export type None<Value> = {
+export type None<Value extends Defined> = {
   some: false;
 } & OptionFns<Value>;
-export type Option<Value> = Some<Value> | None<Value>;
+export type Option<Value extends Defined> = Some<Value> | None<Value>;
 
-export interface OptionFns<Value> {
+export interface OptionFns<Value extends Defined> {
   readonly [FORMINATOR_OPTION]: true;
 
   unwrap(this: Option<Value>): Value;
@@ -20,14 +20,14 @@ export interface OptionFns<Value> {
 
   or(this: Option<Value>, value: Option<Value>): Option<Value>;
 
-  map<T>(this: Option<Value>, fn: (value: Value) => T): Option<T>;
+  map<T>(this: Option<Value>, fn: (value: Value) => T): Option<T & Defined>;
 
   isSome(this: Option<Value>): this is Some<Value>;
 
   isNone(this: Option<Value>): this is None<Value>;
 }
 
-function getOptionFns<Value>(): OptionFns<Value> {
+function getOptionFns<Value extends Defined>(): OptionFns<Value> {
   return {
     [FORMINATOR_OPTION]: true,
     unwrap() {
@@ -53,7 +53,7 @@ function getOptionFns<Value>(): OptionFns<Value> {
 
 const optionFns = getOptionFns<any>();
 
-function createSome<Value extends {} | null>(
+function createSome<Value extends Defined>(
   value: Value,
 ): Some<Value> & OptionFns<Value> {
   if (value === undefined) {
@@ -62,7 +62,7 @@ function createSome<Value extends {} | null>(
   return Object.assign(Object.create(optionFns), { some: true, value });
 }
 
-function createNone<Value>(): None<Value> {
+function createNone<Value extends Defined>(): None<Value> {
   return Object.assign(Object.create(optionFns), { some: false });
 }
 
@@ -70,7 +70,7 @@ const theNone = createNone<any>();
 
 const cache = new FirmMap<any, Some<any>>();
 
-export function some<Value extends {} | null>(
+export function some<Value extends Defined>(
   value: Value,
 ): Some<Value> & OptionFns<Value> {
   if (!cache.has(value)) {
@@ -79,21 +79,23 @@ export function some<Value extends {} | null>(
   return cache.get(value)!;
 }
 
-export function none<Value>(): None<Value> {
+export function none<Value extends Defined>(): None<Value> {
   return theNone;
 }
 
-export function isOption(value: any): value is Option<unknown> {
+export function isOption(value: any): value is Option<unknown & Defined> {
   return !!(value && value[FORMINATOR_OPTION]);
 }
 
-function isSome<Value>(
+function isSome<Value extends Defined>(
   option: Option<Value>,
 ): option is Some<Value> & OptionFns<Value> {
   return option.some;
 }
 
-function isNone<Value>(option: Option<Value>): option is None<Value> {
+function isNone<Value extends Defined>(
+  option: Option<Value>,
+): option is None<Value> {
   return !option.some;
 }
 
@@ -106,21 +108,27 @@ export class NoneError extends Error {
   }
 }
 
-function unwrap<Value>(option: Option<Value>): Value {
+function unwrap<Value extends Defined>(option: Option<Value>): Value {
   if (isSome(option)) {
     return option.value;
   }
   throwNoneError();
 }
 
-function unwrap_or<Value>(option: Option<Value>, value: Value): Value {
+function unwrap_or<Value extends Defined>(
+  option: Option<Value>,
+  value: Value,
+): Value {
   if (isSome(option)) {
     return option.value;
   }
   return value;
 }
 
-function or<Value>(option: Option<Value>, value: Option<Value>): Option<Value> {
+function or<Value extends Defined>(
+  option: Option<Value>,
+  value: Option<Value>,
+): Option<Value> {
   if (isSome(option)) {
     return option;
   }
@@ -135,7 +143,7 @@ export function throwNoneError(): never {
   throw new NoneError();
 }
 
-export function catchNoneError<R>(fn: () => R): Option<R> {
+export function catchNoneError<R>(fn: () => R): Option<R & Defined> {
   try {
     return intoOption(fn());
   } catch (e) {
@@ -146,20 +154,27 @@ export function catchNoneError<R>(fn: () => R): Option<R> {
   }
 }
 
-function mapOption<V, T>(option: Option<V>, fn: (v: V) => T): Option<T> {
+function mapOption<V extends Defined, T>(
+  option: Option<V>,
+  fn: (v: V) => T,
+): Option<T & Defined> {
   if (isNone(option)) {
     return none();
   }
   return intoOption(fn(option.value));
 }
 
-export function intoOption<Value>(value: Value | undefined): Option<Value> {
+export function intoOption<Value>(
+  value: Value | undefined,
+): Option<Value & Defined> {
   if (value === undefined) {
     return none();
   }
   return some(value);
 }
 
-export function fromOption<Value>(option: Option<Value>): Value | undefined {
+export function fromOption<Value extends Defined>(
+  option: Option<Value>,
+): Value | undefined {
   return option.isSome() ? option.value : undefined;
 }

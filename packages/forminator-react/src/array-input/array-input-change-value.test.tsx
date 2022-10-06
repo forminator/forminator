@@ -4,6 +4,7 @@ import {
   getFinalValue,
   some,
 } from '@forminator/core';
+import { Defined } from '@forminator/option';
 import { suppressErrorOutput } from '@forminator/test-render-hook';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -56,7 +57,7 @@ const SortButton = (props: { index?: number; children?: ReactNode }) => {
   const { children } = props;
   const fragment = useFragment<
     Array<ForminatorFragment<string, string>>,
-    unknown
+    Defined
   >();
   const onClick = () => {
     const value = fragment.value$.getValue();

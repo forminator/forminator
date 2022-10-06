@@ -1,3 +1,4 @@
+import { Defined } from '@forminator/option';
 import { fromOption } from '@forminator/option';
 import { intoOption } from '@forminator/option';
 import { isOption } from '@forminator/option';
@@ -10,15 +11,19 @@ import { Some } from '@forminator/option';
 import { some } from '@forminator/option';
 import { Wire } from '@forminator/react-wire';
 
-export declare function createFragment<IValue, EValue>(
-  initialValue?: IValue,
-): ForminatorFragment<IValue, EValue>;
+export declare function createFragment<
+  IValue extends Defined,
+  EValue extends Defined,
+>(initialValue?: IValue): ForminatorFragment<IValue, EValue>;
 
 export declare function createId(prefix?: string): string;
 
 declare const FORMINATOR_FRAGMENT: unique symbol;
 
-export declare interface ForminatorFragment<IValue, EValue> {
+export declare interface ForminatorFragment<
+  IValue extends Defined,
+  EValue extends Defined,
+> {
   readonly [FORMINATOR_FRAGMENT]: true;
   readonly id: string;
   initialValue: Option_2<EValue>;
@@ -32,7 +37,7 @@ export declare interface ForminatorFragment<IValue, EValue> {
 export { fromOption };
 
 export declare function getFinalState$<
-  IValue,
+  IValue extends Defined,
   SD extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,
@@ -40,23 +45,25 @@ export declare function getFinalState$<
 ): ReadonlyWire<Option_2<SD['finalState']>>;
 
 export declare function getFinalState<
-  IValue,
+  IValue extends Defined,
   SD extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,
   stateComposer: StateComposer<SD>,
 ): Option_2<SD['finalState']>;
 
-export declare function getFinalValue$<IValue, EValue>(
-  fragment: ForminatorFragment<IValue, EValue>,
-): ReadonlyWire<Option_2<EValue>>;
+export declare function getFinalValue$<
+  IValue extends Defined,
+  EValue extends Defined,
+>(fragment: ForminatorFragment<IValue, EValue>): ReadonlyWire<Option_2<EValue>>;
 
-export declare function getFinalValue<IValue, EValue>(
-  fragment: ForminatorFragment<IValue, EValue>,
-): Option_2<EValue>;
+export declare function getFinalValue<
+  IValue extends Defined,
+  EValue extends Defined,
+>(fragment: ForminatorFragment<IValue, EValue>): Option_2<EValue>;
 
 export declare function getState$<
-  IValue,
+  IValue extends Defined,
   SD extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,
@@ -65,14 +72,15 @@ export declare function getState$<
 ): StateWire<SD>;
 
 export declare type GetValue = <Value>(
-  v: ForminatorFragment<any, Value> | ReadonlyWire<Value>,
+  v: ForminatorFragment<any, Value & Defined> | ReadonlyWire<Value>,
 ) => Value;
 
 export { intoOption };
 
-export declare function isForminatorFragment<IValue, EValue>(
-  value: any,
-): value is ForminatorFragment<IValue, EValue>;
+export declare function isForminatorFragment<
+  IValue extends Defined,
+  EValue extends Defined,
+>(value: any): value is ForminatorFragment<IValue, EValue>;
 
 export { isOption };
 
@@ -84,7 +92,10 @@ export { Option_2 as Option };
 
 export { OptionFns };
 
-export declare function setComposer<IValue, EValue>(
+export declare function setComposer<
+  IValue extends Defined,
+  EValue extends Defined,
+>(
   fragment: ForminatorFragment<IValue, EValue>,
   composer: ValueComposer<IValue, EValue>,
 ): void;
@@ -131,22 +142,23 @@ export declare interface ValueComposer<IValue, EValue> {
     options: {
       get: GetValue;
     },
-  ): ForminatorFragment<unknown, any>[];
+  ): ForminatorFragment<any, any>[];
 }
 
 export declare function waitForFinalState<
-  IValue,
+  IValue extends Defined,
   SD extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,
   stateComposer: StateComposer<SD>,
 ): Promise<SD['finalState']>;
 
-export declare function waitForFinalValue<IValue, EValue>(
-  fragment: ForminatorFragment<IValue, EValue>,
-): Promise<EValue>;
+export declare function waitForFinalValue<
+  IValue extends Defined,
+  EValue extends Defined,
+>(fragment: ForminatorFragment<IValue, EValue>): Promise<EValue>;
 
-export declare function waitForSomeValue<T>(
+export declare function waitForSomeValue<T extends Defined>(
   wire: ReadonlyWire<Option_2<T>>,
 ): Promise<T>;
 

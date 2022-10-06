@@ -1,6 +1,6 @@
 import { ReadonlyWire } from '@forminator/react-wire';
 import { ForminatorFragment } from '../../fragment/forminator-fragment';
-import { Option, throwNoneError } from '@forminator/option';
+import { Defined, Option, throwNoneError } from '@forminator/option';
 import { ValueComposer } from '../value-composer';
 
 export function createAtomicValueComposer<Value>(): ValueComposer<
@@ -21,8 +21,10 @@ export function getAtomicValueComposer<Value>(): ValueComposer<Value, Value> {
   return atomicComposer;
 }
 
-export type ArrayFragmentValue<Item> = Array<ForminatorFragment<any, Item>>;
-function createArrayValueComposer<Item>(): ValueComposer<
+export type ArrayFragmentValue<Item extends Defined> = Array<
+  ForminatorFragment<any, Item>
+>;
+function createArrayValueComposer<Item extends Defined>(): ValueComposer<
   ArrayFragmentValue<Item>,
   Item[]
 > {
@@ -36,17 +38,21 @@ function createArrayValueComposer<Item>(): ValueComposer<
   };
 }
 const arrayComposer = createArrayValueComposer<any>();
-export function getArrayValueComposer<Item>(): ValueComposer<
+export function getArrayValueComposer<Item extends Defined>(): ValueComposer<
   ArrayFragmentValue<Item>,
   Item[]
 > {
   return arrayComposer;
 }
 
-export type TaggedFragmentValue<Key extends string, Value> = Partial<
-  Record<Key, ForminatorFragment<any, Value>>
->;
-export function createTaggedValueComposer<Key extends string, Value>(
+export type TaggedFragmentValue<
+  Key extends string,
+  Value extends Defined,
+> = Partial<Record<Key, ForminatorFragment<any, Value>>>;
+export function createTaggedValueComposer<
+  Key extends string,
+  Value extends Defined,
+>(
   fragment$: ReadonlyWire<Option<ForminatorFragment<Key, Key>>>,
 ): ValueComposer<TaggedFragmentValue<Key, Value>, Value> {
   return {

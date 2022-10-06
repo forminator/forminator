@@ -5,10 +5,10 @@ import {
   StateDefinition,
   StateWire,
 } from '../state-composer/state-composer';
-import { none, Option, some } from '@forminator/option';
+import { Defined, none, Option, some } from '@forminator/option';
 
 export function getState$<
-  IValue,
+  IValue extends Defined,
   SD extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,
@@ -24,7 +24,7 @@ export function getState$<
 
 const getWireValue = <Value>(wire: Wire<Value>) => wire.getValue();
 export function getExistingState$<
-  IValue,
+  IValue extends Defined,
   S extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,
@@ -38,7 +38,7 @@ export function getExistingState$<
 }
 
 export function createAndStoreState$<
-  IValue,
+  IValue extends Defined,
   SD extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,

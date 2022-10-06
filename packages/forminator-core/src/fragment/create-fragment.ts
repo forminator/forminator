@@ -1,10 +1,10 @@
 import { createWire, ReadonlyWire } from '@forminator/react-wire';
 import { createId } from '../utils/id';
-import { none, Option } from '@forminator/option';
+import { Defined, none, Option } from '@forminator/option';
 import { ValueComposer } from '../value-composer/value-composer';
 import { FORMINATOR_FRAGMENT, ForminatorFragment } from './forminator-fragment';
 
-export function createFragment<IValue, EValue>(
+export function createFragment<IValue extends Defined, EValue extends Defined>(
   initialValue?: IValue,
 ): ForminatorFragment<IValue, EValue> {
   return {

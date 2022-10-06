@@ -1,5 +1,6 @@
 import {
   catchNoneError,
+  Defined,
   fromOption,
   intoOption,
   isOption,
@@ -119,7 +120,7 @@ describe('isOption', function () {
 
     function fn2(o: any) {
       if (isOption(o)) {
-        const s: Option<unknown> = o;
+        const s: Option<Defined> = o;
       }
       if (isOption(o)) {
         // @ts-expect-error

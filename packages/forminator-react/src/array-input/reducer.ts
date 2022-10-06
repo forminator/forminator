@@ -1,4 +1,5 @@
 import { ForminatorFragment } from '@forminator/core';
+import { Defined } from '@forminator/option';
 import { ArrayFragment } from './types';
 import * as utils from './value-utils';
 
@@ -10,7 +11,7 @@ export interface AddItemAction {
   type: typeof ADD_ITEM;
   payload: {
     index: number;
-    fragment: ForminatorFragment<unknown, unknown>;
+    fragment: ForminatorFragment<Defined, Defined>;
   };
 }
 
@@ -35,7 +36,7 @@ export type ArrayInputActionTypes =
 
 export function addItem(
   index: number,
-  fragment: ForminatorFragment<unknown, unknown>,
+  fragment: ForminatorFragment<Defined, Defined>,
 ): ArrayInputActionTypes {
   return {
     type: ADD_ITEM,

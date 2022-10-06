@@ -1,9 +1,10 @@
 import { ForminatorFragment } from '@forminator/core';
+import { Defined } from '@forminator/option';
 import { useFragmentContext } from './contexts/fragment-context';
 
-export function useFragment<IValue, EValue>(): ForminatorFragment<
-  IValue,
-  EValue
-> {
+export function useFragment<
+  IValue extends Defined,
+  EValue extends Defined,
+>(): ForminatorFragment<IValue, EValue> {
   return useFragmentContext();
 }

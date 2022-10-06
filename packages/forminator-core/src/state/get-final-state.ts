@@ -7,23 +7,31 @@ import {
   StateComposer,
   StateDefinition,
 } from '../state-composer/state-composer';
-import { catchNoneError, intoOption, Option } from '@forminator/option';
+import {
+  catchNoneError,
+  Defined,
+  intoOption,
+  Option,
+} from '@forminator/option';
 import { waitForSomeValue } from '../utils/option-wire';
 import { getFinalValue, getFinalValue$ } from '../value/get-final-value';
 import { getExistingState$ } from './get-state-wire';
 
 type Getters = {
   getWireValue: <Value>(wire: ReadonlyWire<Value>) => Value;
-  getFragmentValue: <IValue, EValue>(
+  getFragmentValue: <IValue extends Defined, EValue extends Defined>(
     fragment: ForminatorFragment<IValue, EValue>,
   ) => Option<EValue>;
-  getFragmentState: <IValue, SD extends StateDefinition<any, any, any, any>>(
+  getFragmentState: <
+    IValue extends Defined,
+    SD extends StateDefinition<any, any, any, any>,
+  >(
     fragment: ForminatorFragment<IValue, any>,
   ) => Option<SD['state']>;
 };
 
 export function _getFinalState<
-  IValue,
+  IValue extends Defined,
   SD extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,
@@ -36,10 +44,10 @@ export function _getFinalState<
     const fragments = fragmentComposer.getFragments(
       intoOption(value).unwrap(),
       {
-        get: <IValue, Value>(
-          v: ForminatorFragment<IValue, Value> | ReadonlyWire<Value>,
+        get: <Value>(
+          v: ForminatorFragment<any, Value & Defined> | ReadonlyWire<Value>,
         ): Value => {
-          return isForminatorFragment<IValue, Value>(v)
+          return isForminatorFragment<any, Value & Defined>(v)
             ? getFragmentValue(v).unwrap()
             : getWireValue(v as ReadonlyWire<Value>);
         },
@@ -54,7 +62,7 @@ export function _getFinalState<
 }
 
 export function getFinalState<
-  IValue,
+  IValue extends Defined,
   SD extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,
@@ -68,7 +76,7 @@ export function getFinalState<
 }
 
 function createFinalState$<
-  IValue,
+  IValue extends Defined,
   SD extends StateDefinition<any, any, any, any>,
 >(fragment: ForminatorFragment<IValue, any>, stateComposer: StateComposer<SD>) {
   return createSelector<Option<SD['finalState']>>({
@@ -83,7 +91,7 @@ function createFinalState$<
 }
 
 export function getFinalState$<
-  IValue,
+  IValue extends Defined,
   SD extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,
@@ -106,7 +114,7 @@ export function getFinalState$<
 }
 
 export function waitForFinalState<
-  IValue,
+  IValue extends Defined,
   SD extends StateDefinition<any, any, any, any>,
 >(
   fragment: ForminatorFragment<IValue, any>,

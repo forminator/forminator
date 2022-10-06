@@ -1,8 +1,9 @@
+import { Defined } from '@forminator/option';
 import { ReadonlyWire } from '@forminator/react-wire';
 import { ForminatorFragment } from '../fragment/forminator-fragment';
 
 export type GetValue = <Value>(
-  v: ForminatorFragment<any, Value> | ReadonlyWire<Value>,
+  v: ForminatorFragment<any, Value & Defined> | ReadonlyWire<Value>,
 ) => Value;
 
 export interface ValueComposer<IValue, EValue> {
@@ -10,5 +11,5 @@ export interface ValueComposer<IValue, EValue> {
   getFragments(
     value: IValue,
     options: { get: GetValue },
-  ): ForminatorFragment<unknown, any>[];
+  ): ForminatorFragment<any, any>[];
 }
