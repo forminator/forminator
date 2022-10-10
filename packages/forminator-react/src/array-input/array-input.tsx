@@ -19,9 +19,7 @@ export function ArrayInput(props: ArrayInputProps) {
   const value$ = useWire<ArrayFragment>(fragment.value$, () => {
     const initialValue = fragment.initialValue.unwrap_or([]);
     return initialValue.map((itemInitialValue) => {
-      const itemFragment = createFragment();
-      itemFragment.initialValue = intoOption(itemInitialValue);
-      return itemFragment;
+      return createFragment(intoOption(itemInitialValue));
     });
   });
 

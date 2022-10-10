@@ -1,9 +1,9 @@
 import {
   createFragment,
+  Defined,
   ForminatorFragment,
   intoOption,
 } from '@forminator/core';
-import { Defined } from '@forminator/core';
 import React, { ReactNode, useState } from 'react';
 import { ExternalValueContextProvider } from './contexts/external-value-context';
 import { FragmentContextProvider } from './contexts/fragment-context';
@@ -27,9 +27,7 @@ function createRootFragment<IValue extends Defined, EValue extends Defined>(
     }
     return rootFragment;
   }
-  const fragment = createFragment<IValue, EValue>(undefined);
-  fragment.initialValue = intoOption(externalValue);
-  return fragment;
+  return createFragment<IValue, EValue>(intoOption(externalValue));
 }
 
 export function Forminator<IValue extends Defined, EValue extends Defined>(

@@ -1,10 +1,10 @@
 import {
   createFragment,
+  Defined,
   ForminatorFragment,
   getFinalValue,
-  some,
+  intoOption,
 } from '@forminator/core';
-import { Defined } from '@forminator/core';
 import { suppressErrorOutput } from '@forminator/test-render-hook';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -25,12 +25,11 @@ const AddButton = (props: {
   initialValue?: string;
 }) => {
   const { index = -1, children } = props;
-  const dispatch = useArrayInputDispatchContext();
+  const dispatch = useArrayInputDispatchContext<string, string>();
   const onClick = () => {
-    const fragment = createFragment();
-    if (props.initialValue !== undefined) {
-      fragment.initialValue = some(props.initialValue);
-    }
+    const fragment = createFragment<string, string>(
+      intoOption(props.initialValue),
+    );
     dispatch(addItem(index, fragment));
   };
   return <button onClick={onClick}>{children}</button>;

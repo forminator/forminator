@@ -7,11 +7,11 @@ export const ADD_ITEM = 'ADD_ITEM';
 export const REMOVE_ITEM = 'REMOVE_ITEM';
 export const MOVE_ITEM = 'MOVE_ITEM';
 
-export interface AddItemAction {
+export interface AddItemAction<IV extends Defined, EV extends Defined> {
   type: typeof ADD_ITEM;
   payload: {
     index: number;
-    fragment: ForminatorFragment<Defined, Defined>;
+    fragment: ForminatorFragment<IV, EV>;
   };
 }
 
@@ -29,15 +29,15 @@ export interface MoveItemAction {
   };
 }
 
-export type ArrayInputActionTypes =
-  | AddItemAction
-  | RemoveItemAction
-  | MoveItemAction;
+export type ArrayInputActionTypes<
+  IV extends Defined = Defined,
+  EV extends Defined = Defined,
+> = AddItemAction<IV, EV> | RemoveItemAction | MoveItemAction;
 
-export function addItem(
+export function addItem<IV extends Defined, EV extends Defined>(
   index: number,
-  fragment: ForminatorFragment<Defined, Defined>,
-): ArrayInputActionTypes {
+  fragment: ForminatorFragment<IV, EV>,
+): ArrayInputActionTypes<IV, EV> {
   return {
     type: ADD_ITEM,
     payload: {
@@ -67,10 +67,10 @@ export function moveItem(
   };
 }
 
-export function arrayInputReducer(
-  state: ArrayFragment,
-  action: ArrayInputActionTypes,
-): ArrayFragment {
+export function arrayInputReducer<IV extends Defined, EV extends Defined>(
+  state: ArrayFragment<IV, EV>,
+  action: ArrayInputActionTypes<IV, EV>,
+): ArrayFragment<IV, EV> {
   switch (action.type) {
     case 'ADD_ITEM': {
       const { index, fragment } = action.payload;

@@ -40,11 +40,14 @@ export function DictInputItem<Value>(props: DictInputItemProps<Value>) {
     }
 
     if (!dictFieldFragment) {
-      const newFieldFragment = lastFieldFragment ?? createFragment();
+      const newFieldFragment =
+        lastFieldFragment ??
+        createFragment(
+          dictFragment.initialValue
+            .map((value) => selectField(value, field))
+            .or(intoOption(defaultInitialValue)),
+        );
       if (newFieldFragment !== lastFieldFragment) {
-        newFieldFragment.initialValue = dictFragment.initialValue
-          .map((value) => selectField(value, field))
-          .or(intoOption(defaultInitialValue));
         lastFragments.set(field, newFieldFragment);
       }
       dispatch(addField(field, newFieldFragment));
