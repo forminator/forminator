@@ -24,16 +24,16 @@ declare interface AddFieldAction {
   };
 }
 
-export declare function addItem(
+export declare function addItem<IV extends Defined, EV extends Defined>(
   index: number,
-  fragment: ForminatorFragment<Defined, Defined>,
-): ArrayInputActionTypes;
+  fragment: ForminatorFragment<IV, EV>,
+): ArrayInputActionTypes<IV, EV>;
 
-declare interface AddItemAction {
+declare interface AddItemAction<IV extends Defined, EV extends Defined> {
   type: typeof ADD_ITEM;
   payload: {
     index: number;
-    fragment: ForminatorFragment<Defined, Defined>;
+    fragment: ForminatorFragment<IV, EV>;
   };
 }
 
@@ -41,12 +41,15 @@ declare type ArrayIndexContextType = number;
 
 export declare function ArrayInput(props: ArrayInputProps): JSX.Element;
 
-declare type ArrayInputActionTypes =
-  | AddItemAction
-  | RemoveItemAction
-  | MoveItemAction;
+declare type ArrayInputActionTypes<
+  IV extends Defined = Defined,
+  EV extends Defined = Defined,
+> = AddItemAction<IV, EV> | RemoveItemAction | MoveItemAction;
 
-declare type ArrayInputDispatchContextType = Dispatch<ArrayInputActionTypes>;
+declare type ArrayInputDispatchContextType<
+  IV extends Defined,
+  EV extends Defined,
+> = Dispatch<ArrayInputActionTypes<IV, EV>>;
 
 export declare interface ArrayInputProps {
   children?: ReactNode;
@@ -171,7 +174,10 @@ declare interface RemoveItemAction {
 
 export declare function useArrayIndexContext(): ArrayIndexContextType;
 
-export declare function useArrayInputDispatchContext(): ArrayInputDispatchContextType;
+export declare function useArrayInputDispatchContext<
+  IV extends Defined,
+  EV extends Defined,
+>(): ArrayInputDispatchContextType<IV, EV>;
 
 export declare function useComposer<
   IValue extends Defined,

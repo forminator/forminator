@@ -1,12 +1,19 @@
+import { Defined } from '@forminator/core';
 import { createContext, Dispatch, PropsWithChildren, useContext } from 'react';
 import { ArrayInputActionTypes } from './reducer';
 
-export type ArrayInputDispatchContextType = Dispatch<ArrayInputActionTypes>;
+export type ArrayInputDispatchContextType<
+  IV extends Defined,
+  EV extends Defined,
+> = Dispatch<ArrayInputActionTypes<IV, EV>>;
 export const ArrayInputDispatchContext = createContext<
-  ArrayInputDispatchContextType | undefined
+  ArrayInputDispatchContextType<any, any> | undefined
 >(undefined);
 
-export function useArrayInputDispatchContext(): ArrayInputDispatchContextType {
+export function useArrayInputDispatchContext<
+  IV extends Defined,
+  EV extends Defined,
+>(): ArrayInputDispatchContextType<IV, EV> {
   const context = useContext(ArrayInputDispatchContext);
   if (context === undefined) {
     throw new Error(
@@ -16,13 +23,18 @@ export function useArrayInputDispatchContext(): ArrayInputDispatchContextType {
   return context;
 }
 
-interface OwnProps {
-  value: ArrayInputDispatchContextType;
+interface OwnProps<IV extends Defined, EV extends Defined> {
+  value: ArrayInputDispatchContextType<IV, EV>;
 }
 
-type Props = PropsWithChildren<OwnProps>;
+type Props<IV extends Defined, EV extends Defined> = PropsWithChildren<
+  OwnProps<IV, EV>
+>;
 
-export function ArrayInputDispatchContextProvider(props: Props) {
+export function ArrayInputDispatchContextProvider<
+  IV extends Defined,
+  EV extends Defined,
+>(props: Props<IV, EV>) {
   return (
     <ArrayInputDispatchContext.Provider value={props.value}>
       {props.children}

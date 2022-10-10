@@ -33,8 +33,7 @@ export function StringInput(
 
 describe('use input value wire', function () {
   it('should respect fragment initial value if presented', function () {
-    const fragment = createFragment();
-    fragment.initialValue = some('fragment');
+    const fragment = createFragment(some('fragment' as string));
     const wrapper = (props: { children?: ReactNode }) => {
       const { children } = props;
       return (
