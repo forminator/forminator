@@ -21,25 +21,25 @@ import { getState$ } from './get-state-wire';
 describe('getFinalState', () => {
   describe('with atomic fragment', () => {
     it('should return none without value composer', () => {
-      const fragment = createFragment<number, number>(0);
+      const fragment = createFragment<number, number>(undefined, 0);
       const loading = getFinalState(fragment, loadingStateComposer);
       expect(loading).toBeNone();
     });
     it('should return state without state wire', () => {
-      const fragment = createFragment<number, number>(0);
+      const fragment = createFragment<number, number>(undefined, 0);
       setComposer(fragment, getAtomicValueComposer());
       const loading = getFinalState(fragment, loadingStateComposer);
       expect(loading).toBeSome(false);
     });
     it('should return state with state wire', () => {
-      const fragment = createFragment<number, number>(0);
+      const fragment = createFragment<number, number>(undefined, 0);
       setComposer(fragment, getAtomicValueComposer());
       getState$(fragment, loadingStateComposer, false);
       const loading = getFinalState(fragment, loadingStateComposer);
       expect(loading).toBeSome(false);
     });
     it('should update when state changed', () => {
-      const fragment = createFragment<number, number>(0);
+      const fragment = createFragment<number, number>(undefined, 0);
       setComposer(fragment, getAtomicValueComposer());
       const state$ = getState$(fragment, loadingStateComposer, false);
       state$.fns.loading();
@@ -49,12 +49,12 @@ describe('getFinalState', () => {
   });
   describe('with composite fragments', () => {
     it('should return none when some composer is not defined', () => {
-      const item1 = createFragment<number, number>(1);
-      const item2 = createFragment<number, number>(2);
-      const fragment = createFragment<ArrayFragmentValue<number>, number[]>([
-        item1,
-        item2,
-      ]);
+      const item1 = createFragment<number, number>(undefined, 1);
+      const item2 = createFragment<number, number>(undefined, 2);
+      const fragment = createFragment<ArrayFragmentValue<number>, number[]>(
+        undefined,
+        [item1, item2],
+      );
       setComposer(item1, getAtomicValueComposer());
       // item2 has no composer
       setComposer(fragment, getArrayValueComposer());
@@ -63,12 +63,12 @@ describe('getFinalState', () => {
       expect(loading).toBeNone();
     });
     it('should return state when all composer defined', () => {
-      const item1 = createFragment<number, number>(1);
-      const item2 = createFragment<number, number>(2);
-      const fragment = createFragment<ArrayFragmentValue<number>, number[]>([
-        item1,
-        item2,
-      ]);
+      const item1 = createFragment<number, number>(undefined, 1);
+      const item2 = createFragment<number, number>(undefined, 2);
+      const fragment = createFragment<ArrayFragmentValue<number>, number[]>(
+        undefined,
+        [item1, item2],
+      );
       setComposer(item1, getAtomicValueComposer());
       setComposer(item2, getAtomicValueComposer());
       setComposer(fragment, getArrayValueComposer());
@@ -78,12 +78,12 @@ describe('getFinalState', () => {
     });
 
     it('should return update state when some state changed', () => {
-      const item1 = createFragment<number, number>(1);
-      const item2 = createFragment<number, number>(2);
-      const fragment = createFragment<ArrayFragmentValue<number>, number[]>([
-        item1,
-        item2,
-      ]);
+      const item1 = createFragment<number, number>(undefined, 1);
+      const item2 = createFragment<number, number>(undefined, 2);
+      const fragment = createFragment<ArrayFragmentValue<number>, number[]>(
+        undefined,
+        [item1, item2],
+      );
       setComposer(item1, getAtomicValueComposer());
       setComposer(item2, getAtomicValueComposer());
       setComposer(fragment, getArrayValueComposer());
@@ -105,10 +105,13 @@ describe('getFinalState', () => {
 
     it('should update state only based on active fragments', () => {
       type Key = 'A' | 'B';
-      const keyFragment$ = createWire(some(createFragment<Key, Key>('A')));
-      const item1 = createFragment<number, number>(1);
-      const item2 = createFragment<number, number>(2);
+      const keyFragment$ = createWire(
+        some(createFragment<Key, Key>(undefined, 'A')),
+      );
+      const item1 = createFragment<number, number>(undefined, 1);
+      const item2 = createFragment<number, number>(undefined, 2);
       const fragment = createFragment<TaggedFragmentValue<Key, number>, number>(
+        undefined,
         {
           A: item1,
           B: item2,
@@ -138,9 +141,10 @@ describe('getFinalState', () => {
       const keyFragment$ = createWire(
         none() as Option<ForminatorFragment<Key, Key>>,
       );
-      const item1 = createFragment<number, number>(1);
-      const item2 = createFragment<number, number>(2);
+      const item1 = createFragment<number, number>(undefined, 1);
+      const item2 = createFragment<number, number>(undefined, 2);
       const fragment = createFragment<TaggedFragmentValue<Key, number>, number>(
+        undefined,
         {
           A: item1,
           B: item2,
@@ -154,9 +158,12 @@ describe('getFinalState', () => {
     });
     it('should update state only based on active fragments when fragment is missing', () => {
       type Key = 'A' | 'B';
-      const keyFragment$ = createWire(some(createFragment<Key, Key>('A')));
-      const item1 = createFragment<number, number>(1);
+      const keyFragment$ = createWire(
+        some(createFragment<Key, Key>(undefined, 'A')),
+      );
+      const item1 = createFragment<number, number>(undefined, 1);
       const fragment = createFragment<TaggedFragmentValue<Key, number>, number>(
+        undefined,
         {
           A: item1,
         },
@@ -183,25 +190,25 @@ describe('getFinalState', () => {
 describe('getFinalState$', () => {
   describe('with atomic fragment', () => {
     it('should have none value without value composer', () => {
-      const fragment = createFragment<number, number>(0);
+      const fragment = createFragment<number, number>(undefined, 0);
       const loading$ = getFinalState$(fragment, loadingStateComposer);
       expect(loading$.getValue()).toBeNone();
     });
     it('should have state without state wire', () => {
-      const fragment = createFragment<number, number>(0);
+      const fragment = createFragment<number, number>(undefined, 0);
       const loading$ = getFinalState$(fragment, loadingStateComposer);
       setComposer(fragment, getAtomicValueComposer());
       expect(loading$.getValue()).toBeSome(false);
     });
     it('should have state with state wire', () => {
-      const fragment = createFragment<number, number>(0);
+      const fragment = createFragment<number, number>(undefined, 0);
       const loading$ = getFinalState$(fragment, loadingStateComposer);
       setComposer(fragment, getAtomicValueComposer());
       getState$(fragment, loadingStateComposer, false);
       expect(loading$.getValue()).toBeSome(false);
     });
     it('should update when state changed', () => {
-      const fragment = createFragment<number, number>(0);
+      const fragment = createFragment<number, number>(undefined, 0);
       const loading$ = getFinalState$(fragment, loadingStateComposer);
       setComposer(fragment, getAtomicValueComposer());
       const state$ = getState$(fragment, loadingStateComposer, false);
@@ -211,12 +218,12 @@ describe('getFinalState$', () => {
   });
   describe('with composite fragments', () => {
     it('should have none value when some composer is not defined', () => {
-      const item1 = createFragment<number, number>(1);
-      const item2 = createFragment<number, number>(2);
-      const fragment = createFragment<ArrayFragmentValue<number>, number[]>([
-        item1,
-        item2,
-      ]);
+      const item1 = createFragment<number, number>(undefined, 1);
+      const item2 = createFragment<number, number>(undefined, 2);
+      const fragment = createFragment<ArrayFragmentValue<number>, number[]>(
+        undefined,
+        [item1, item2],
+      );
       const loading$ = getFinalState$(fragment, loadingStateComposer);
       setComposer(item1, getAtomicValueComposer());
       // item2 has no composer
@@ -226,12 +233,12 @@ describe('getFinalState$', () => {
     });
 
     it('should have state when all composer defined', () => {
-      const item1 = createFragment<number, number>(1);
-      const item2 = createFragment<number, number>(2);
-      const fragment = createFragment<ArrayFragmentValue<number>, number[]>([
-        item1,
-        item2,
-      ]);
+      const item1 = createFragment<number, number>(undefined, 1);
+      const item2 = createFragment<number, number>(undefined, 2);
+      const fragment = createFragment<ArrayFragmentValue<number>, number[]>(
+        undefined,
+        [item1, item2],
+      );
       const loading$ = getFinalState$(fragment, loadingStateComposer);
       setComposer(item1, getAtomicValueComposer());
       setComposer(item2, getAtomicValueComposer());
@@ -241,12 +248,12 @@ describe('getFinalState$', () => {
     });
 
     it('should have updated state when some state changed', () => {
-      const item1 = createFragment<number, number>(1);
-      const item2 = createFragment<number, number>(2);
-      const fragment = createFragment<ArrayFragmentValue<number>, number[]>([
-        item1,
-        item2,
-      ]);
+      const item1 = createFragment<number, number>(undefined, 1);
+      const item2 = createFragment<number, number>(undefined, 2);
+      const fragment = createFragment<ArrayFragmentValue<number>, number[]>(
+        undefined,
+        [item1, item2],
+      );
       const finalState$ = getFinalState$(fragment, loadingStateComposer);
       setComposer(item1, getAtomicValueComposer());
       setComposer(item2, getAtomicValueComposer());
@@ -264,10 +271,13 @@ describe('getFinalState$', () => {
     });
     it('should update state only based on active fragments', () => {
       type Key = 'A' | 'B';
-      const keyFragment$ = createWire(some(createFragment<Key, Key>('A')));
-      const item1 = createFragment<number, number>(1);
-      const item2 = createFragment<number, number>(2);
+      const keyFragment$ = createWire(
+        some(createFragment<Key, Key>(undefined, 'A')),
+      );
+      const item1 = createFragment<number, number>(undefined, 1);
+      const item2 = createFragment<number, number>(undefined, 2);
       const fragment = createFragment<TaggedFragmentValue<Key, number>, number>(
+        undefined,
         {
           A: item1,
           B: item2,
@@ -296,7 +306,7 @@ describe('getFinalState$', () => {
     });
   });
   it('should cache final value wire', () => {
-    const fragment = createFragment(0);
+    const fragment = createFragment(undefined, 0);
     const finalState$1 = getFinalState$(fragment, loadingStateComposer);
     const finalState$2 = getFinalState$(fragment, loadingStateComposer);
     expect(finalState$1).toEqual(finalState$2);
@@ -304,7 +314,7 @@ describe('getFinalState$', () => {
 });
 describe('getState$', () => {
   it('should cache final value wire', () => {
-    const fragment = createFragment(0);
+    const fragment = createFragment(undefined, 0);
     const finalState$1 = getState$(fragment, loadingStateComposer);
     const finalState$2 = getState$(fragment, loadingStateComposer);
     expect(finalState$1).toEqual(finalState$2);
@@ -313,7 +323,7 @@ describe('getState$', () => {
 
 describe('waitForFinalState', () => {
   it('should resolves to final state', async () => {
-    const fragment = createFragment<number, number>(0);
+    const fragment = createFragment<number, number>(undefined, 0);
     setComposer(fragment, getAtomicValueComposer());
     await expect(
       waitForFinalState(fragment, loadingStateComposer),

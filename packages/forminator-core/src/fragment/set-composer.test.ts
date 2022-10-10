@@ -5,7 +5,7 @@ import { setComposer } from './set-composer';
 describe('setComposer', () => {
   describe('with different value', () => {
     it('should change composer', () => {
-      const fragment = createFragment<number, number>(0);
+      const fragment = createFragment<number, number>(undefined, 0);
       const composer1 = createAtomicValueComposer<number>();
       const composer2 = createAtomicValueComposer<number>();
       setComposer(fragment, composer1);
@@ -17,7 +17,7 @@ describe('setComposer', () => {
   });
   describe('with same value', () => {
     it('should not set value', () => {
-      const fragment = createFragment<number, number>(0);
+      const fragment = createFragment<number, number>(undefined, 0);
       const composer = createAtomicValueComposer<number>();
       setComposer(fragment, composer);
       const maybeComposer1 = fragment.composer$.getValue();
