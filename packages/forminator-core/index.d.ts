@@ -14,7 +14,10 @@ import { Wire } from '@forminator/react-wire';
 export declare function createFragment<
   IValue extends Defined,
   EValue extends Defined,
->(initialValue?: IValue): ForminatorFragment<IValue, EValue>;
+>(
+  initialValue?: Option_2<EValue>,
+  initialIValue?: IValue,
+): ForminatorFragment<IValue, EValue>;
 
 export declare function createId(prefix?: string): string;
 
