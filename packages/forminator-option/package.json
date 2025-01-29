@@ -32,18 +32,18 @@
     "prepublishOnly": "pnpm run build"
   },
   "devDependencies": {
-    "@microsoft/api-extractor": "^7",
-    "@types/jest": "^28",
-    "@types/node": "^18",
-    "eslint": "^8",
-    "eslint-config-react-app": "^7",
-    "jest": "^28",
-    "jest-leak-detector": "^29.0.3",
-    "lint-staged": "^13",
-    "prettier": "^2",
-    "ts-jest": "^28",
-    "typescript": "^4",
-    "vite": "^3",
-    "vite-plugin-dts": "^1"
+    "@microsoft/api-extractor": "catalog:",
+    "@types/jest": "catalog:",
+    "@types/node": "catalog:",
+    "eslint": "catalog:",
+    "eslint-config-react-app": "catalog:",
+    "jest": "catalog:",
+    "jest-leak-detector": "catalog:",
+    "lint-staged": "catalog:",
+    "prettier": "catalog:",
+    "ts-jest": "catalog:",
+    "typescript": "catalog:",
+    "vite": "catalog:",
+    "vite-plugin-dts": "catalog:"
   }
 }

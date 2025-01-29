@@ -90,7 +90,7 @@ export const printMessage = (
         options.diff.received,
         EXPECTED_LABEL,
         RECEIVED_LABEL,
-        self.expand,
+        self.expand ?? true,
       ) + '\n';
   }
   return message;

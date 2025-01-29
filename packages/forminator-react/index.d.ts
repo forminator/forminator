@@ -1,8 +1,11 @@
 import { Defined } from '@forminator/core';
 import { Dispatch } from 'react';
 import { ForminatorFragment } from '@forminator/core';
+import { JSXElementConstructor } from 'react';
 import { Option as Option_2 } from '@forminator/core';
 import { PropsWithChildren } from 'react';
+import { default as React_2 } from 'react';
+import { ReactElement } from 'react';
 import { ReactNode } from 'react';
 import { ValueComposer } from '@forminator/core';
 import { Wire } from '@forminator/react-wire';
@@ -39,7 +42,9 @@ declare interface AddItemAction<IV extends Defined, EV extends Defined> {
 
 declare type ArrayIndexContextType = number;
 
-export declare function ArrayInput(props: ArrayInputProps): JSX.Element;
+export declare function ArrayInput(
+  props: ArrayInputProps,
+): ReactElement<any, string | JSXElementConstructor<any>>;
 
 declare type ArrayInputActionTypes<
   IV extends Defined = Defined,
@@ -57,14 +62,16 @@ export declare interface ArrayInputProps {
 
 export declare function ArrayOutput(
   props: ArrayOutputProps,
-): JSX.Element | null;
+): ReactElement<any, string | JSXElementConstructor<any>> | null;
 
 export declare interface ArrayOutputProps {
   children?: ReactNode;
   fallback?: ReactNode;
 }
 
-export declare function DictInput(props: DictInputProps): JSX.Element;
+export declare function DictInput(
+  props: DictInputProps,
+): ReactElement<any, string | JSXElementConstructor<any>>;
 
 declare type DictInputActionTypes = AddFieldAction | RemoveFieldAction;
 
@@ -72,7 +79,7 @@ declare type DictInputDispatchContextType = Dispatch<DictInputActionTypes>;
 
 export declare function DictInputItem<Value>(
   props: DictInputItemProps<Value>,
-): JSX.Element | null;
+): ReactElement<any, string | JSXElementConstructor<any>> | null;
 
 export declare interface DictInputItemProps<Value> {
   field: string;
@@ -87,7 +94,7 @@ export declare interface DictInputProps {
 
 export declare function ExternalValueContextProvider<EValue extends Defined>(
   props: ExternalValueContextProviderProps<EValue>,
-): JSX.Element;
+): React_2.ReactElement<any, string | React_2.JSXElementConstructor<any>>;
 
 declare interface ExternalValueContextProviderOwnProps<EValue extends Defined> {
   value: ExternalValueContextType<EValue>;
@@ -102,7 +109,9 @@ declare type ExternalValueContextType<EValue extends Defined> =
 export declare function Forminator<
   IValue extends Defined,
   EValue extends Defined,
->(props: ForminatorProps<IValue, EValue>): JSX.Element;
+>(
+  props: ForminatorProps<IValue, EValue>,
+): React_2.ReactElement<any, string | React_2.JSXElementConstructor<any>>;
 
 export declare interface ForminatorProps<
   IValue extends Defined,
@@ -116,7 +125,9 @@ export declare interface ForminatorProps<
 export declare function FragmentContextProvider<
   IValue extends Defined,
   EValue extends Defined,
->(props: FragmentContextProviderProps<IValue, EValue>): JSX.Element;
+>(
+  props: FragmentContextProviderProps<IValue, EValue>,
+): React_2.ReactElement<any, string | React_2.JSXElementConstructor<any>>;
 
 declare interface FragmentContextProviderOwnProps<
   IValue extends Defined,
