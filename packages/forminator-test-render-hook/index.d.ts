@@ -44,6 +44,9 @@ export declare interface ResultRef<Result> {
   error?: Error;
 }
 
-export declare function suppressErrorOutput(): any;
+export declare function suppressErrorOutput(): jest.SpyInstance<
+  void,
+  [message?: any, ...optionalParams: any[]]
+>;
 
 export {};
