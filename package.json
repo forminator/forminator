@@ -18,9 +18,10 @@
     "@commitlint/config-conventional": "^17.0.0",
     "husky": "^8.0.1",
     "prettier": "^2.6.2",
-    "turbo": "^1.2.9"
+    "turbo": "^2.5.3"
   },
   "scripts": {
     "prepare": "husky install"
-  }
+  },
+  "packageManager": "pnpm@10.8.0"
 }

@@ -1,13 +1,22 @@
 {
-  "baseBranch": "origin/main",
-  "pipeline": {
+  "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": [".cache/**", "dist/**", "index.d.ts"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        ".cache/**",
+        "dist/**",
+        "index.d.ts"
+      ]
     },
     "test": {
-      "dependsOn": ["^build"],
-      "outputs": ["coverage/**"]
+      "dependsOn": [
+        "^build"
+      ],
+      "outputs": [
+        "coverage/**"
+      ]
     },
     "lint": {
       "outputs": []
